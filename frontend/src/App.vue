@@ -22,12 +22,19 @@
             {{ item.name }}
           </SfLink>
         </SfHeaderNavigationItem>
+        <button @click="openPopup()">Login</button>
       </template>
     </SfHeader>
 
     <section class="page-content">
       <router-view />
     </section>
+
+    <PopupAccount
+      v-if="isOpenPopup"
+      :visible="isOpenPopup"
+      @closePopUp="closePopUp"
+    />
 
     <SfFooter :column="column" :multiple="multiple">
       <SfFooterColumn
@@ -64,6 +71,7 @@ import { SfButton } from "@storefront-ui/vue";
 import { SfMenuItem } from "@storefront-ui/vue";
 import { SfLink } from "@storefront-ui/vue";
 import {} from "@storefront-ui/vue";
+import PopupAccount from "@/components/PopupAccount.vue";
 export default {
   components: {
     SfFooter,
@@ -73,13 +81,18 @@ export default {
     SfImage,
     SfButton,
     SfMenuItem,
+    PopupAccount,
   },
   data() {
     return {
+      isOpenPopup: false,
       isMobile: false,
       navigation: [
         { name: "home", link: "/" },
         { name: "about", link: "/about" },
+        { name: "account", link: "/account" },
+        { name: "login", link: "/login" },
+        { name: "register", link: "/register" },
       ],
       searchValue: "",
       title: "Storefront UI",
@@ -122,6 +135,14 @@ export default {
       column: 4,
       multiple: false,
     };
+  },
+  methods: {
+    openPopup() {
+      this.isOpenPopup = true;
+    },
+    closePopUp() {
+      this.isOpenPopup = false;
+    },
   },
 };
 </script>
