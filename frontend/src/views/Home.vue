@@ -29,27 +29,32 @@
         />
       </template>
     </SfBannerGrid>
+
+    <CollectionProduct />
   </div>
 </template>
+
 <script>
 import { SfHero } from "@storefront-ui/vue";
 import { SfBannerGrid } from "@storefront-ui/vue";
 import { SfBanner } from "@storefront-ui/vue";
+import CollectionProduct from "@/components/CollectionProduct";
 
 export default {
   components: {
     SfHero,
     SfBannerGrid,
     SfBanner,
+    CollectionProduct,
   },
 
   data() {
     return {
       heros: [
         {
-          title: "Colorful summer dresses are already in store",
-          subtitle: "Summer Collection 2019",
-          buttonText: "Learn more",
+          title: "Sản phẩm nổi bật",
+          subtitle: "Summer Collection 2020",
+          buttonText: "Xem thêm",
           image: {
             mobile: require("@/assets/storybook/SfHero/hero.png"),
             desktop: require("@/assets/storybook/SfHero/hero.png"),
@@ -57,9 +62,9 @@ export default {
           background: "#ECEFF1",
         },
         {
-          title: "Colorful summer dresses are already in store",
+          title: "BRUNO SOHNLE GLASHUTTE",
           subtitle: "Summer Collection 2019",
-          buttonText: "Learn more",
+          buttonText: "Xem thêm",
           image: {
             mobile: require("@/assets/storybook/SfHero/hero-2.png"),
             desktop: require("@/assets/storybook/SfHero/hero-2.png"),
