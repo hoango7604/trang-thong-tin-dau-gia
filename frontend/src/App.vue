@@ -150,5 +150,7 @@ export default {
 <style>
 .page-content {
   min-height: 60vh;
+  max-width: 1240px;
+  margin: auto;
 }
 </style>

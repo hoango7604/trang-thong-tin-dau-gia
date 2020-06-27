@@ -31,6 +31,8 @@
     </SfBannerGrid>
 
     <CollectionProduct />
+
+    <CollectionProduct title="ĐỒNG HỒ STUHRLING ORIGINAL" />
   </div>
 </template>
 
