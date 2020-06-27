@@ -9,7 +9,7 @@ namespace GWebsite.AbpZeroTemplate.Application.Share.Auctions.Dto
 {
     public class AuctionDto : Entity<int>
     {
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public string StartDate { get; set; }
+        public string EndDate { get; set; }
     }
 }
