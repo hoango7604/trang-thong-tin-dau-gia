@@ -1,7 +1,5 @@
 <template>
   <div class="product-page">
-    <p>{{ $route.params.id }}</p>
-
     <SfBreadcrumbs :breadcrumbs="breadcrumbs" class="mb-4" />
     <div class="row mb-5">
       <SfGallery
@@ -161,6 +159,26 @@ export default {
         ],
       },
     };
+  },
+
+  methods: {
+    fetchProductDetail() {
+      console.log("id: ", this.$route.params.id);
+      this.$axios
+        .get(`Product/GetProductForView?id=${this.$route.params.id}`)
+        .then((data) => {
+          const { result, success } = data.data;
+          console.log("fetchProductDetail -> result", result);
+          if (success) {
+            // this.product = result.items;
+          }
+          return;
+        });
+    },
+  },
+
+  created() {
+    this.fetchProductDetail();
   },
 };
 </script>

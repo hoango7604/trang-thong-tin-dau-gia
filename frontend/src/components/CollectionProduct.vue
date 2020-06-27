@@ -74,7 +74,7 @@ export default {
       badgeLabel: "time cd",
       badgeColor: "color-danger",
       productTitle: "Stuhrling Original ST-571.3345K54",
-      link: "/product/zxczxczxc",
+      link: "/product/3",
       linkTag: "",
       regularPrice: "$10.99",
       specialPrice: "$5.09",
