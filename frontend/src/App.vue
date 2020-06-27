@@ -44,7 +44,9 @@
       >
         <SfList v-if="column.items">
           <SfListItem v-for="(item, i) in column.items" :key="i">
-            <SfMenuItem :label="item" />
+            <SfLink :link="item.url">
+              <SfMenuItem :label="item.title" />
+            </SfLink>
           </SfListItem>
         </SfList>
         <div v-else>
@@ -110,25 +112,54 @@ export default {
 
       columns: [
         {
-          title: "About us",
-          items: ["Who we are", "Quality in the details", "Customer Reviews"],
+          title: "Về chúng tôi",
+          items: [
+            {
+              title: "Giới thiệu chung",
+              url: "/about",
+            },
+            {
+              title: "Phương thức thanh toán",
+              url: "/payment",
+            },
+            {
+              title: "Liên hệ",
+              url: "/contact",
+            },
+          ],
         },
         {
-          title: "Departments",
-          items: ["Women fashion", "Men fashion", "Kidswear", "Home"],
+          title: "Hướng dẫn sử dụng",
+          items: [
+            {
+              title: "Hướng dẫn đăng nhập hệ thống",
+              url: "/about",
+            },
+            {
+              title: "Hướng dẫn đăng ký thành viên",
+              url: "/payment",
+            },
+            {
+              title: "Hướng dẫn quản lý đấu giá",
+              url: "/contact",
+            },
+          ],
         },
         {
-          title: "Help",
-          items: ["Customer service", "Size guide", "Contact us"],
-        },
-        { title: "Payment & delivery", items: ["Purchase terms", "Guarantee"] },
-        {
-          title: "Social",
-          pictures: [
-            require("@/assets/storybook/SfFooter/facebook.svg"),
-            require("@/assets/storybook/SfFooter/pinterest.svg"),
-            require("@/assets/storybook/SfFooter/twitter.svg"),
-            require("@/assets/storybook/SfFooter/youtube.svg"),
+          title: "Hỗ trợ khách hàng",
+          items: [
+            {
+              title: "Chính sách bảo hành",
+              url: "/about",
+            },
+            {
+              title: "Chính sách đổi hàng",
+              url: "/payment",
+            },
+            {
+              title: "Chính sách bảo mật",
+              url: "/contact",
+            },
           ],
         },
       ],
@@ -148,6 +179,10 @@ export default {
 </script>
 
 <style>
+:root {
+  --link-text-decoration: none;
+  --section-margin: 100px;
+}
 .page-content {
   min-height: 60vh;
   max-width: 1240px;
