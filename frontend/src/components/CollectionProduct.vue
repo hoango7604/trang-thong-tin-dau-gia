@@ -1,49 +1,66 @@
 <template>
-  <SfCarousel :style="{ maxWidth: '1240px', margin: 'auto' }">
-    <SfCarouselItem v-for="index in 12" :key="index">
-      <SfProductCard
-        :image="image"
-        :image-width="imageWidth"
-        :image-height="imageHeight"
-        :badge-label="badgeLabel"
-        :badge-color="badgeColor"
-        :title="title"
-        :link="link"
-        :link-tag="linkTag"
-        :show-add-to-cart-button="showAddToCartButton"
-        :add-to-cart-disabled="addToCartDisabled"
-        :is-added-to-cart="isAddedToCart"
-        @click:is-added-to-cart="alert('@click:is-added-to-cart')"
-      >
-        <div slot="title" class="title">
-          <a :href="link" class="sf-product-card__link">
-            <h3 class="sf-product-card__title">{{ title }}</h3>
-          </a>
-        </div>
-        <div slot="price" class="price">
-          <p class="price-original">Giá gốc: {{ regularPrice }}</p>
-          <p>Giá khởi điểm: {{ specialPrice }}</p>
-        </div>
-        <div slot="add-to-cart-icon">
-          
-        </div>
-      </SfProductCard>
-    </SfCarouselItem>
-  </SfCarousel>
+  <div class="mb-24">
+    <SfHeading :level="level" :title="title" />
+
+    <SfCarousel :style="{ maxWidth: '1240px', margin: 'auto' }">
+      <SfCarouselItem v-for="index in 12" :key="index">
+        <SfProductCard
+          :image="image"
+          :image-width="imageWidth"
+          :image-height="imageHeight"
+          :badge-label="badgeLabel"
+          :badge-color="badgeColor"
+          :link-tag="linkTag"
+          :wishlistIcon="false"
+          :show-add-to-cart-button="showAddToCartButton"
+          :add-to-cart-disabled="addToCartDisabled"
+          :is-added-to-cart="isAddedToCart"
+          @click:is-added-to-cart="alert('@click:is-added-to-cart')"
+        >
+          <div slot="title" class="title">
+            <a :href="link" class="sf-product-card__link">
+              <h3 class="sf-product-card__title">{{ productTitle }}</h3>
+            </a>
+          </div>
+          <div slot="price" class="price">
+            <p class="price-original">Giá gốc: {{ regularPrice }}</p>
+            <p>Giá khởi điểm: {{ specialPrice }}</p>
+          </div>
+          <div slot="add-to-cart-icon">
+            <img :src="hammer" alt="#" />
+          </div>
+        </SfProductCard>
+      </SfCarouselItem>
+    </SfCarousel>
+  </div>
 </template>
 
 <script>
 import { SfCarousel } from "@storefront-ui/vue";
 import { SfProductCard } from "@storefront-ui/vue";
+import { SfHeading } from "@storefront-ui/vue";
 
 export default {
   components: {
     SfCarousel,
+    SfHeading,
     SfProductCard,
+  },
+
+  props: {
+    level: {
+      type: Number,
+      default: 2,
+    },
+    title: {
+      type: String,
+      default: "New Arrival",
+    },
   },
 
   data() {
     return {
+      hammer: require("@/assets/icon/hammer.svg"),
       image: {
         mobile: { url: require("@/assets/storybook/Home/productB.jpg") },
         desktop: { url: require("@/assets/storybook/Home/productB.jpg") },
@@ -52,8 +69,8 @@ export default {
       imageHeight: 316,
       badgeLabel: "time cd",
       badgeColor: "color-danger",
-      title: "Stuhrling Original ST-571.3345K54",
-      link: "",
+      productTitle: "Stuhrling Original ST-571.3345K54",
+      link: "/product/zxczxczxc",
       linkTag: "",
       regularPrice: "$10.99",
       specialPrice: "$5.09",

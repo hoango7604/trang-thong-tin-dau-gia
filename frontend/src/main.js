@@ -6,10 +6,18 @@ import "@storefront-ui/vue/styles.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
+import "./assets/css/main.css";
 
 Vue.config.productionTip = false;
 
 Vue.use(ElementUI);
+
+Vue.filter("formatCurrency", (value) => {
+  return new Intl.NumberFormat("it-IT", {
+    style: "currency",
+    currency: "VND",
+  }).format(value);
+});
 
 new Vue({
   router,
