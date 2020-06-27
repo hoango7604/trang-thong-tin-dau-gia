@@ -25,6 +25,13 @@ namespace GWebsite.AbpZeroTemplate.EntityFrameworkCore
         public virtual DbSet<DemoModel> DemoModels { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<CustomUser> CustomUsers { get; set; }
+
+        public virtual DbSet<Client> Clients { get; set; }
+        public virtual DbSet<Auction> Auctions { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<AuctionDetail> AuctionDetails { get; set; }
+
         /// <summary>
         /// GPermissions dùng cho bên Gwebsite
         /// </summary>

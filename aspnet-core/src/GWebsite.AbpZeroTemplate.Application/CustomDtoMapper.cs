@@ -1,8 +1,13 @@
 using AutoMapper;
+using GWebsite.AbpZeroTemplate.Application.Share.AuctionDetails.Dto;
+using GWebsite.AbpZeroTemplate.Application.Share.Auctions.Dto;
+using GWebsite.AbpZeroTemplate.Application.Share.Categories.Dto;
+using GWebsite.AbpZeroTemplate.Application.Share.Clients.Dto;
 using GWebsite.AbpZeroTemplate.Application.Share.Customers.Dto;
 using GWebsite.AbpZeroTemplate.Application.Share.CustomUsers.Dto;
 using GWebsite.AbpZeroTemplate.Application.Share.DemoModels.Dto;
 using GWebsite.AbpZeroTemplate.Application.Share.MenuClients.Dto;
+using GWebsite.AbpZeroTemplate.Application.Share.Products.Dto;
 using GWebsite.AbpZeroTemplate.Core.Models;
 
 namespace GWebsite.AbpZeroTemplate.Applications
@@ -33,6 +38,17 @@ namespace GWebsite.AbpZeroTemplate.Applications
             configuration.CreateMap<CustomUserInput, CustomUser>();
             configuration.CreateMap<CustomUser, CustomUserInput>();
             configuration.CreateMap<CustomUser, CustomUserForViewDto>();
+
+            configuration.CreateMap<Client, ClientDto>();
+            configuration.CreateMap<ClientDto, Client>();
+            configuration.CreateMap<Auction, AuctionDto>();
+            configuration.CreateMap<AuctionDto, Auction>();
+            configuration.CreateMap<Category, CategoryDto>();
+            configuration.CreateMap<CategoryDto, Category>();
+            configuration.CreateMap<Product, ProductDto>();
+            configuration.CreateMap<ProductDto, Product>();
+            configuration.CreateMap<AuctionDetail, AuctionDetailDto>();
+            configuration.CreateMap<AuctionDetailDto, AuctionDetail>();
         }
     }
 }

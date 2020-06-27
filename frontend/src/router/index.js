@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import Account from "../views/Account.vue";
 
 Vue.use(VueRouter);
 
@@ -26,6 +27,11 @@ const routes = [
     component: function() {
       return import("../views/Product.vue");
     },
+  },
+  {
+    path: "/account",
+    name: "Account",
+    component: Account,
   },
 ];
 
