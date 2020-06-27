@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-24">
+  <div class="mb-5 mt-5">
     <SfHeading :level="level" :title="title" />
 
     <SfCarousel :style="{ maxWidth: '1240px', margin: 'auto' }">
@@ -56,6 +56,10 @@ export default {
       type: String,
       default: "New Arrival",
     },
+    type: {
+      type: String,
+      default: "hightlight",
+    },
   },
 
   data() {
@@ -77,7 +81,42 @@ export default {
       showAddToCartButton: true,
       isAddedToCart: false,
       addToCartDisabled: false,
+      products: [],
     };
+  },
+
+  methods: {
+    fetchProductsHighlights() {
+      this.$axios.get("Product/GetProductsByFilter").then((data) => {
+        const { result, success } = data.data;
+        if (success) {
+          this.products = result.items;
+        }
+        return;
+      });
+    },
+    fetchProductsByCategory() {
+      this.$axios
+        .get("Product/GetProductsByFilter", {
+          categoryId: this.categoryId,
+        })
+        .then((data) => {
+          console.log("fetchProductsByCategory -> data", data);
+          const { result, success } = data.data;
+          if (success) {
+            this.products = result.items;
+          }
+          return;
+        });
+    },
+  },
+
+  created() {
+    if (this.type == "hightlight") {
+      this.fetchProductsHighlights();
+    } else if (this.type == "category") {
+      this.fetchProductsByCategory();
+    }
   },
 };
 </script>

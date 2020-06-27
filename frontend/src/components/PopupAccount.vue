@@ -34,7 +34,7 @@
             />
           </div>
           <div class="mt-1 d-flex justify-content-center">
-            <SfButton>
+            <SfButton @click="actionLogin()">
               Đăng nhập
             </SfButton>
           </div>
@@ -83,7 +83,7 @@
             />
           </div>
           <div class="mt-1 d-flex justify-content-center">
-            <SfButton>
+            <SfButton @click="actionRegister()">
               Đăng kí
             </SfButton>
           </div>
@@ -138,6 +138,13 @@ export default {
   methods: {
     close() {
       this.$emit("closePopUp");
+    },
+    actionLogin() {
+      this.$store.dispatch("account/login", this.formLogin);
+    },
+
+    actionRegister() {
+      this.$store.dispatch("account/register", this.formRegister);
     },
   },
 };

@@ -1,11 +1,21 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import axios from "axios";
+import account from "./account.js";
+import auction from "./auction.js";
+import product from "./product.js";
 
 Vue.use(Vuex);
 
+axios.defaults.baseURL = "http://localhost:5000/api/";
+
+const debug = process.env.NODE_ENV !== "production";
+
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
-  actions: {},
-  modules: {},
+  modules: {
+    account,
+    auction,
+    product,
+  },
+  strict: debug,
 });

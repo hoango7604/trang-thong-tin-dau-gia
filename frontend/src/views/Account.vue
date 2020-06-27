@@ -14,25 +14,25 @@
           <el-form
             label-position="right"
             label-width="100px"
-            ref="formEditUser"
-            :model="formEditUser"
+            ref="formUpdateUser"
+            :model="formUpdateUser"
             :rules="rules"
           >
             <el-form-item label="Họ và tên: ">
-              <el-input v-model="formEditUser.username"></el-input>
+              <el-input v-model="formUpdateUser.username"></el-input>
             </el-form-item>
             <el-form-item label="SĐT: ">
-              <el-input v-model="formEditUser.phone"></el-input>
+              <el-input v-model="formUpdateUser.phone"></el-input>
             </el-form-item>
             <el-form-item label="Email: ">
-              <el-input v-model="formEditUser.email"></el-input>
+              <el-input v-model="formUpdateUser.email"></el-input>
             </el-form-item>
             <el-form-item label="Địa chỉ: ">
-              <el-input v-model="formEditUser.address"></el-input>
+              <el-input v-model="formUpdateUser.address"></el-input>
             </el-form-item>
             <el-form-item label="Giới tính: ">
               <el-select
-                v-model="formEditUser.gerder"
+                v-model="formUpdateUser.gerder"
                 placeholder="Giới tính: "
               >
                 <el-option label="Nam" value="male"></el-option>
@@ -40,7 +40,7 @@
               </el-select>
             </el-form-item>
             <el-form-item class="d-flex justify-content-end">
-              <el-button type="primary" @click="submitForm('formEditUser')"
+              <el-button type="primary" @click="submitForm('formUpdateUser')"
                 >Cập nhật thông tin</el-button
               >
             </el-form-item>
@@ -88,7 +88,7 @@
 export default {
   data() {
     return {
-      formEditUser: {
+      formUpdateUser: {
         username: "",
         phone: "",
         email: "",
@@ -141,25 +141,22 @@ export default {
   },
   methods: {
     submitForm(formName) {
-      if (formName == "formEditUser") {
+      if (formName == "formUpdateUser") {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            console.log(this.formEditUser);
-            alert("submit!");
+            this.$store.dispatch("account/updateAccount", this.formUpdateUser);
           } else {
-            console.log("error submit!!");
             return false;
           }
         });
       } else if (formName == "formResetPassword") {
-        console.log(this.formResetPassword);
+        this.$store.dispatch("account/resetPassword", this.formResetPassword);
       }
     },
 
     handleClickTab(obj, e) {
-      console.log(obj.label);
       if (obj.label == "Đăng xuất") {
-        console.log("Logout");
+        this.$store.dispatch("account/logout");
       }
     },
   },

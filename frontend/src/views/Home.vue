@@ -30,9 +30,15 @@
       </template>
     </SfBannerGrid>
 
-    <CollectionProduct />
+    <CollectionProduct type="hightlight" title="SẢN PHẨM NỔI BẬT" />
 
-    <CollectionProduct title="ĐỒNG HỒ STUHRLING ORIGINAL" />
+    <CollectionProduct
+      type="category"
+      categoryId="0"
+      title="ĐỒNG HỒ STUHRLING"
+    />
+
+    <CollectionProduct type="category" categoryId="2" title="ĐỒNG HỒ CASIO" />
   </div>
 </template>
 
