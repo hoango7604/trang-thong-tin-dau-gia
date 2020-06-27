@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace GWebsite.AbpZeroTemplate.Application.Controllers
 {
     [Route("api/[controller]/[action]")]
-    public class ProductController
+    public class ProductController : GWebsiteControllerBase
     {
         private readonly IProductAppService productAppService;
 
