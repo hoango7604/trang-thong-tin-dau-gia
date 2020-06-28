@@ -175,10 +175,18 @@ export default {
         });
     },
 
-    actionAuctionNow() {
-      const token = localStorage.getItem("token");
-      if (token) {
-        console.log("call api auction");
+    async actionAuctionNow() {
+      const isLogged = localStorage.getItem("isLogged");
+      if (isLogged) {
+        const user = JSON.parse(localStorage.getItem("user"));
+        const res = await this.$axios.post("Product/Bidding", {
+          productId: this.$route.params.id,
+          clientId: user.id,
+        });
+        const { success } = res.data;
+        if (success) {
+          location.reload();
+        }
       } else {
         this.$store.commit("account/setTogglePopupLogin", true);
       }

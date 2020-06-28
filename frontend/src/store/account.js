@@ -2,7 +2,9 @@ import axios from "axios";
 
 const state = () => ({
   isLogged: false,
+  isErrorLogin: false,
   togglePopUpLogin: false,
+  user: null,
 });
 
 const getters = {};
@@ -14,8 +16,19 @@ const mutations = {
       localStorage.setItem("isLogged", action);
     } else {
       localStorage.removeItem("isLogged");
+      localStorage.removeItem("user");
     }
   },
+
+  setUser(state, action) {
+    state.user = action;
+    localStorage.setItem("user", JSON.stringify(action));
+  },
+
+  setErrorLogin(state, action) {
+    state.isErrorLogin = action;
+  },
+
   setTogglePopupLogin(state, action) {
     state.togglePopUpLogin = action;
   },
@@ -29,10 +42,12 @@ const actions = {
     });
 
     const { result } = res.data;
-    console.log("login -> result", result);
     if (result) {
       commit("setLogged", true);
       commit("setTogglePopupLogin", false);
+      commit("setUser", result);
+    } else {
+      commit("setErrorLogin", true);
     }
   },
 

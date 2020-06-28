@@ -135,6 +135,13 @@ export default {
       required: true,
     };
   },
+
+  computed: {
+    isErrorLogin() {
+      return this.$store.state.account.isErrorLogin;
+    },
+  },
+
   methods: {
     close() {
       this.$emit("closePopUp");

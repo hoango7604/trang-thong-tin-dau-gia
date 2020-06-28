@@ -23,6 +23,7 @@
           </SfLink>
         </SfHeaderNavigationItem>
         <button @click="openPopup()" v-if="!isLogged">Login</button>
+        <button @click="logout()" v-if="isLogged">Logout</button>
       </template>
     </SfHeader>
 
@@ -90,7 +91,7 @@ export default {
       isMobile: false,
       navigation: [
         { name: "Trang chủ", link: "/" },
-        { name: "Danh mục sản phẩm", link: "/auction/id" },
+        { name: "Danh mục sản phẩm", link: "/auction/0" },
         { name: "Tài khoản của tôi", link: "/account" },
         { name: "Phiên đã đấu", link: "/account" },
         { name: "Phiên vừa kết thúc", link: "/account" },
@@ -180,8 +181,13 @@ export default {
     openPopup() {
       this.$store.commit("account/setTogglePopupLogin", true);
     },
+
     closePopUp() {
       this.$store.commit("account/setTogglePopupLogin", false);
+    },
+
+    logout() {
+      this.$store.dispatch("account/logout");
     },
   },
 
