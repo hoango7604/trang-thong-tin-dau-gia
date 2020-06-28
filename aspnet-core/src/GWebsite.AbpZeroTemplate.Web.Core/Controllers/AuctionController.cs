@@ -38,6 +38,12 @@ namespace GWebsite.AbpZeroTemplate.Application.Controllers
             return auctionAppService.GetAuctionForView(id);
         }
 
+        [HttpGet]
+        public AuctionDto GetCurrentAuction()
+        {
+            return auctionAppService.GetCurrentAuction();
+        }
+
         [HttpPost]
         public void CreateOrEditAuction([FromBody] AuctionDto input)
         {

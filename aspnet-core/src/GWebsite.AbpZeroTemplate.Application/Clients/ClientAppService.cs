@@ -58,6 +58,17 @@ namespace GWebsite.AbpZeroTemplate.Web.Core.Clients
             return GetList(filter);
         }
 
+        public ClientDto Login(ClientLogin login)
+        {
+            var clientEntity = clientRepository.GetAll().Where(x => !x.IsDelete).SingleOrDefault(x => x.Phone.Equals(login.Phone) && x.Password.Equals(login.Password));
+            if (clientEntity != null)
+            {
+                return ObjectMapper.Map<ClientDto>(clientEntity);
+            }
+
+            return null;
+        }
+
         #endregion public methods
 
         #region private methods

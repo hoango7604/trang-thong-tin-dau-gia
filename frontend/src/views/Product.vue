@@ -1,7 +1,5 @@
 <template>
   <div class="product-page">
-    <p>{{ $route.params.id }}</p>
-
     <SfBreadcrumbs :breadcrumbs="breadcrumbs" class="mb-4" />
     <div class="row mb-5">
       <SfGallery
@@ -55,7 +53,7 @@
             </div>
           </div>
           <div class="col-12 col-md-5">
-            <SfButton style="width: 100%">
+            <SfButton style="width: 100%" @click="actionAuctionNow">
               Đấu giá ngay
             </SfButton>
           </div>
@@ -161,6 +159,42 @@ export default {
         ],
       },
     };
+  },
+
+  methods: {
+    fetchProductDetail() {
+      this.$axios
+        .get(`Product/GetProductForView?id=${this.$route.params.id}`)
+        .then((data) => {
+          const { result, success } = data.data;
+          console.log("fetchProductDetail -> result", result);
+          if (success) {
+            // this.product = result.items;
+          }
+          return;
+        });
+    },
+
+    async actionAuctionNow() {
+      const isLogged = localStorage.getItem("isLogged");
+      if (isLogged) {
+        const user = JSON.parse(localStorage.getItem("user"));
+        const res = await this.$axios.post("Product/Bidding", {
+          productId: this.$route.params.id,
+          clientId: user.id,
+        });
+        const { success } = res.data;
+        if (success) {
+          location.reload();
+        }
+      } else {
+        this.$store.commit("account/setTogglePopupLogin", true);
+      }
+    },
+  },
+
+  created() {
+    this.fetchProductDetail();
   },
 };
 </script>

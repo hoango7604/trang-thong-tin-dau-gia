@@ -34,7 +34,7 @@
             />
           </div>
           <div class="mt-1 d-flex justify-content-center">
-            <SfButton>
+            <SfButton @click="actionLogin()">
               Đăng nhập
             </SfButton>
           </div>
@@ -48,7 +48,7 @@
               v-model="formRegister.name"
               type="text"
               label="Họ và tên"
-              name="name"
+              name="fullName"
               :valid="valid"
               :error-message="errorMessage"
               :required="required"
@@ -73,7 +73,7 @@
               :required="required"
             />
             <SfInput
-              v-model="formRegister.repassword"
+              v-model="formRegister.rePassword"
               type="password"
               label="Nhập lại Mật khẩu"
               name="rePassword"
@@ -83,7 +83,7 @@
             />
           </div>
           <div class="mt-1 d-flex justify-content-center">
-            <SfButton>
+            <SfButton @click="actionRegister()">
               Đăng kí
             </SfButton>
           </div>
@@ -125,7 +125,7 @@ export default {
       },
       messageRegister: "Vui lòng nhập đầy đủ thông tin",
       formRegister: {
-        name: "",
+        fullName: "",
         phone: "",
         password: "",
         rePassword: "",
@@ -135,9 +135,28 @@ export default {
       required: true,
     };
   },
+
+  computed: {
+    isErrorLogin() {
+      return this.$store.state.account.isErrorLogin;
+    },
+  },
+
   methods: {
     close() {
       this.$emit("closePopUp");
+    },
+    actionLogin() {
+      this.$store.dispatch("account/login", this.formLogin);
+    },
+
+    actionRegister() {
+      const { rePassword, password } = this.formRegister;
+      if (rePassword !== password) {
+        //show error
+      } else {
+        this.$store.dispatch("account/register", this.formRegister);
+      }
     },
   },
 };

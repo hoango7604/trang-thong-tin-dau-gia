@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace GWebsite.AbpZeroTemplate.Application.Controllers
 {
     [Route("api/[controller]/[action]")]
-    public class ProductController
+    public class ProductController : GWebsiteControllerBase
     {
         private readonly IProductAppService productAppService;
 
@@ -24,6 +24,12 @@ namespace GWebsite.AbpZeroTemplate.Application.Controllers
         public PagedResultDto<ProductDto> GetProductsByFilter(ProductFilter filter)
         {
             return productAppService.GetProducts(filter);
+        }
+
+        [HttpGet]
+        public PagedResultDto<ProductDto> GetLatestProducts()
+        {
+            return productAppService.GetLatestProducts();
         }
 
         [HttpGet]
@@ -42,6 +48,12 @@ namespace GWebsite.AbpZeroTemplate.Application.Controllers
         public void CreateOrEditProduct([FromBody] ProductDto input)
         {
             productAppService.CreateOrEditProduct(input);
+        }
+
+        [HttpPost]
+        public void Bidding([FromBody] BiddingDto biddingDto)
+        {
+            productAppService.Bidding(biddingDto);
         }
 
         [HttpDelete("{id}")]

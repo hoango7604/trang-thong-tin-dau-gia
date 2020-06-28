@@ -53,14 +53,14 @@ namespace GWebsite.AbpZeroTemplate.Application
         protected void SetAuditInsert(FullAuditModel entity)
         {
             entity.CreatedDate = DateTime.Now;
-            entity.CreatedBy = GetCurrentUser().Name;
+            // entity.CreatedBy = GetCurrentUser().Name;
             entity.IsDelete = false;
         }
 
         protected void SetAuditEdit(FullAuditModel entity)
         {
             entity.UpdatedDate = DateTime.Now;
-            entity.UpdatedBy = GetCurrentUser().Name;
+            // entity.UpdatedBy = GetCurrentUser().Name;
         }
 
         protected virtual User GetCurrentUser()
