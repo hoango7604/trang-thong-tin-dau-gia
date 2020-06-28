@@ -1,4 +1,4 @@
-const BASE_API = "http://localhost:5000";
+import axios from "axios";
 
 const state = () => ({
   isLogged: false,
@@ -12,6 +12,8 @@ const mutations = {
     state.isLogged = action;
     if (action) {
       localStorage.setItem("isLogged", action);
+    } else {
+      localStorage.removeItem("isLogged");
     }
   },
   setTogglePopupLogin(state, action) {
@@ -20,25 +22,42 @@ const mutations = {
 };
 
 const actions = {
-  login({ commit }, payload) {
-    const user = {
-      phone: "123",
-      password: "123",
-    };
-    if (payload.phone == user.phone && payload.password == user.password) {
+  async login({ commit }, payload) {
+    const res = await axios.post("Client/Login", {
+      phone: payload.phone,
+      password: payload.password,
+    });
+
+    const { result } = res.data;
+    console.log("login -> result", result);
+    if (result) {
       commit("setLogged", true);
       commit("setTogglePopupLogin", false);
     }
   },
+
   logout({ commit }, payload) {
-    console.log("logout -> payload", payload);
+    commit("setLogged", false);
   },
-  register({ commit }, payload) {
-    console.log("register -> payload", payload);
+
+  async register({ commit, dispatch }, payload) {
+    const res = await axios.post("Client/CreateOrEditClient", {
+      phone: payload.phone,
+      password: payload.password,
+      fullName: payload.fullName,
+      address: null,
+      role: "client",
+      id: 0,
+    });
+    if (res.data.success) {
+      dispatch("login", payload);
+    }
   },
+
   resetPassword({ commit }, payload) {
     console.log("resetPassword -> payload", payload);
   },
+
   updateAccount({ commit }, payload) {
     console.log("updateAccount -> payload", payload);
   },

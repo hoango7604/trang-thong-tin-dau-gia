@@ -48,7 +48,7 @@
               v-model="formRegister.name"
               type="text"
               label="Họ và tên"
-              name="name"
+              name="fullName"
               :valid="valid"
               :error-message="errorMessage"
               :required="required"
@@ -73,7 +73,7 @@
               :required="required"
             />
             <SfInput
-              v-model="formRegister.repassword"
+              v-model="formRegister.rePassword"
               type="password"
               label="Nhập lại Mật khẩu"
               name="rePassword"
@@ -125,7 +125,7 @@ export default {
       },
       messageRegister: "Vui lòng nhập đầy đủ thông tin",
       formRegister: {
-        name: "",
+        fullName: "",
         phone: "",
         password: "",
         rePassword: "",
@@ -144,7 +144,12 @@ export default {
     },
 
     actionRegister() {
-      this.$store.dispatch("account/register", this.formRegister);
+      const { rePassword, password } = this.formRegister;
+      if (rePassword !== password) {
+        //show error
+      } else {
+        this.$store.dispatch("account/register", this.formRegister);
+      }
     },
   },
 };

@@ -28,19 +28,20 @@ export default {
       }
     },
 
-    async getCurrentAuctionId() {
-      //get Auction ID hien tai ra truoc sau do moi goi api de get ra danh sach san pham theo danh muc
-      // const currentAuctionId = await this.$axios.get(`Auction/GetCurrentAuction`);
-      const currentAuctionId = 0;
-      this.currentAuctionId = currentAuctionId;
-    },
-
     async fetchAllCategory() {
       const res = await this.$axios.get("Category/GetCategorysByFilter");
       const { success, result } = res.data;
       if (success) {
         this.categories = result.items;
         console.log("categories", this.categories);
+      }
+    },
+
+    async getCurrentAuctionId() {
+      const res = await this.$axios.get("Auction/GetCurrentAuction");
+      const { result, success } = res.data;
+      if (success) {
+        this.currentAuctionId = result.id;
       }
     },
   },

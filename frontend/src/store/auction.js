@@ -1,4 +1,4 @@
-const BASE_API = "http://localhost:5000";
+import axios from "axios";
 
 const state = () => ({});
 
