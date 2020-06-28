@@ -46,9 +46,9 @@ namespace GWebsite.AbpZeroTemplate.Application.Controllers
         }
 
         [HttpPost]
-        public void Login([FromBody] ClientLogin login)
+        public bool Login([FromBody] ClientLogin login)
         {
-            clientAppService.Login(login);
+            return clientAppService.Login(login);
         }
 
         [HttpDelete("{id}")]
