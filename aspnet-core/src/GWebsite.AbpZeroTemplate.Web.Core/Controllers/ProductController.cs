@@ -51,9 +51,9 @@ namespace GWebsite.AbpZeroTemplate.Application.Controllers
         }
 
         [HttpPost]
-        public void Bidding([FromBody] int id, [FromBody] int clientId)
+        public void Bidding([FromBody] BiddingDto biddingDto)
         {
-            productAppService.Bidding(id, clientId);
+            productAppService.Bidding(biddingDto);
         }
 
         [HttpDelete("{id}")]

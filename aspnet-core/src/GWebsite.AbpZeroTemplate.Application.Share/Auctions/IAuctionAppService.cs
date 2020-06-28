@@ -15,5 +15,6 @@ namespace GWebsite.AbpZeroTemplate.Application.Share.Auctions
         void DeleteAuction(int id);
         PagedResultDto<AuctionDto> GetAuctions(AuctionFilter filter);
         AuctionDto GetAuctionForView(int id);
+        AuctionDto GetCurrentAuction();
     }
 }

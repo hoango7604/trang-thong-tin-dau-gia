@@ -58,9 +58,9 @@ namespace GWebsite.AbpZeroTemplate.Web.Core.Clients
             return GetList(filter);
         }
 
-        public bool Login(string username, string password)
+        public bool Login(ClientLogin login)
         {
-            var client = clientRepository.GetAll().Where(x => !x.IsDelete).SingleOrDefault(x => x.Username.Equals(username) && x.Password.Equals(password));
+            var client = clientRepository.GetAll().Where(x => !x.IsDelete).SingleOrDefault(x => x.Phone.Equals(login.Phone) && x.Password.Equals(login.Password));
             if (client != null)
             {
                 return true;

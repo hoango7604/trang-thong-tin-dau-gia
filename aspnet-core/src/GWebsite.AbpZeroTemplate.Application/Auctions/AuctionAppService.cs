@@ -58,6 +58,12 @@ namespace GWebsite.AbpZeroTemplate.Web.Core.Auctions
             return GetList(filter);
         }
 
+        public AuctionDto GetCurrentAuction()
+        {
+            var AuctionEntity = auctionRepository.GetAll().Where(x => !x.IsDelete).Last();
+            return ObjectMapper.Map<AuctionDto>(AuctionEntity);
+        }
+
         #endregion public method
 
         #region private methods
