@@ -14,6 +14,7 @@ namespace GWebsite.AbpZeroTemplate.Application.Share.Products
         ProductDto GetProductForEdit(int id);
         void DeleteProduct(int id);
         PagedResultDto<ProductDto> GetProducts(ProductFilter filter);
+        PagedResultDto<ProductDto> GetLatestProducts();
         ProductDto GetProductForView(int id);
     }
 }

@@ -27,6 +27,12 @@ namespace GWebsite.AbpZeroTemplate.Application.Controllers
         }
 
         [HttpGet]
+        public PagedResultDto<ProductDto> GetLatestProducts()
+        {
+            return productAppService.GetLatestProducts();
+        }
+
+        [HttpGet]
         public ProductDto GetProductForEdit(int id)
         {
             return productAppService.GetProductForEdit(id);

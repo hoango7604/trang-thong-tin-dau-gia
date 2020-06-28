@@ -4,6 +4,8 @@ using Abp.Linq.Extensions;
 using GWebsite.AbpZeroTemplate.Application;
 using GWebsite.AbpZeroTemplate.Application.Share.Products;
 using GWebsite.AbpZeroTemplate.Application.Share.Products.Dto;
+using GWebsite.AbpZeroTemplate.Application.Share.Auctions;
+using GWebsite.AbpZeroTemplate.Application.Share.Auctions.Dto;
 using GWebsite.AbpZeroTemplate.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -17,10 +19,15 @@ namespace GWebsite.AbpZeroTemplate.Web.Core.Products
     public class ProductAppService : GWebsiteAppServiceBase, IProductAppService
     {
         private readonly IRepository<Product> productRepository;
+        private readonly IRepository<Auction> auctionRepository;
 
-        public ProductAppService(IRepository<Product> productRepository)
+        public ProductAppService(
+            IRepository<Product> productRepository,
+            IRepository<Auction> auctionRepository
+        )
         {
             this.productRepository = productRepository;
+            this.auctionRepository = auctionRepository;
         }
 
         #region public methods
@@ -55,6 +62,28 @@ namespace GWebsite.AbpZeroTemplate.Web.Core.Products
         public PagedResultDto<ProductDto> GetProducts(ProductFilter filter)
         {
             return GetList(filter);
+        }
+
+        public PagedResultDto<ProductDto> GetLatestProducts()
+        {
+            var filter = new ProductFilter
+            {
+                MaxResultCount = 12,
+            };
+            var query = productRepository.GetAll().Where(x => !x.IsDelete);
+            var totalCount = query.Count();
+
+            // sorting
+            query.OrderByDescending(x => x.Id);
+
+            // paging
+            var items = query.PageBy(filter).ToList();
+
+            // result
+            return new PagedResultDto<ProductDto>(
+                totalCount,
+                items.Select(item => ObjectMapper.Map<ProductDto>(item)).ToList()
+            );
         }
 
         #endregion public methods
