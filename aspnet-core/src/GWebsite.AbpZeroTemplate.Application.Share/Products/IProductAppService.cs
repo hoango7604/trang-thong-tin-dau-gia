@@ -16,6 +16,6 @@ namespace GWebsite.AbpZeroTemplate.Application.Share.Products
         PagedResultDto<ProductDto> GetProducts(ProductFilter filter);
         PagedResultDto<ProductDto> GetLatestProducts();
         ProductDto GetProductForView(int id);
-        void Bidding(int id, int clientId);
+        void Bidding(BiddingDto biddingDto);
     }
 }

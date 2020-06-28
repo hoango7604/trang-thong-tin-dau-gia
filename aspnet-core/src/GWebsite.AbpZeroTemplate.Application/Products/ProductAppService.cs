@@ -86,21 +86,21 @@ namespace GWebsite.AbpZeroTemplate.Web.Core.Products
             );
         }
 
-        public void Bidding(int id, int clientId)
+        public void Bidding(BiddingDto biddingDto)
         {
-            ProductDto product = Get(id);
+            ProductDto product = Get(biddingDto.ProductId);
             if (product.WinnerClientId > 0)
             {
                 product.CurrentPrice += product.StepPrice;
             }
-            product.WinnerClientId = clientId;
+            product.WinnerClientId = biddingDto.ClientId;
             Edit(product);
 
             var auctionDetailDto = new AuctionDetailDto()
             {
                 Id = 0,
                 AuctionId = product.AuctionId,
-                ClientId = clientId,
+                ClientId = biddingDto.ClientId,
                 Price = product.CurrentPrice,
                 ProductId = product.Id,
             };
