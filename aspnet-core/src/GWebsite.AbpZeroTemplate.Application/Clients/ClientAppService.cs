@@ -58,15 +58,15 @@ namespace GWebsite.AbpZeroTemplate.Web.Core.Clients
             return GetList(filter);
         }
 
-        public bool Login(ClientLogin login)
+        public ClientDto Login(ClientLogin login)
         {
-            var client = clientRepository.GetAll().Where(x => !x.IsDelete).SingleOrDefault(x => x.Phone.Equals(login.Phone) && x.Password.Equals(login.Password));
-            if (client != null)
+            var clientEntity = clientRepository.GetAll().Where(x => !x.IsDelete).SingleOrDefault(x => x.Phone.Equals(login.Phone) && x.Password.Equals(login.Password));
+            if (clientEntity != null)
             {
-                return true;
+                return ObjectMapper.Map<ClientDto>(clientEntity);
             }
 
-            return false;
+            return null;
         }
 
         #endregion public methods

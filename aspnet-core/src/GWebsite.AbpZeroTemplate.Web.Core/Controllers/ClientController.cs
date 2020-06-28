@@ -46,7 +46,7 @@ namespace GWebsite.AbpZeroTemplate.Application.Controllers
         }
 
         [HttpPost]
-        public bool Login([FromBody] ClientLogin login)
+        public ClientDto Login([FromBody] ClientLogin login)
         {
             return clientAppService.Login(login);
         }
