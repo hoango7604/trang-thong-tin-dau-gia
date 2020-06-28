@@ -74,7 +74,7 @@ namespace GWebsite.AbpZeroTemplate.Web.Core.Products
             var totalCount = query.Count();
 
             // sorting
-            query.OrderByDescending(x => x.Id);
+            query = query.OrderByDescending(x => x.Id);
 
             // paging
             var items = query.PageBy(filter).ToList();
