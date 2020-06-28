@@ -22,11 +22,11 @@
             {{ item.name }}
           </SfLink>
         </SfHeaderNavigationItem>
-        <button @click="openPopup()">Login</button>
+        <button @click="openPopup()" v-if="!isLogged">Login</button>
       </template>
     </SfHeader>
 
-    <section class="page-content">
+    <section class="page-content mt-5">
       <router-view />
     </section>
 
@@ -87,14 +87,13 @@ export default {
   },
   data() {
     return {
-      isOpenPopup: false,
       isMobile: false,
       navigation: [
-        { name: "home", link: "/" },
-        { name: "about", link: "/about" },
-        { name: "account", link: "/account" },
-        { name: "login", link: "/login" },
-        { name: "register", link: "/register" },
+        { name: "Trang chủ", link: "/" },
+        { name: "Danh mục sản phẩm", link: "/auction/id" },
+        { name: "Tài khoản của tôi", link: "/account" },
+        { name: "Phiên đã đấu", link: "/account" },
+        { name: "Phiên vừa kết thúc", link: "/account" },
       ],
       searchValue: "",
       title: "Storefront UI",
@@ -167,13 +166,30 @@ export default {
       multiple: false,
     };
   },
+  computed: {
+    isOpenPopup() {
+      return this.$store.state.account.togglePopUpLogin;
+    },
+
+    isLogged() {
+      return this.$store.state.account.isLogged;
+    },
+  },
+
   methods: {
     openPopup() {
-      this.isOpenPopup = true;
+      this.$store.commit("account/setTogglePopupLogin", true);
     },
     closePopUp() {
-      this.isOpenPopup = false;
+      this.$store.commit("account/setTogglePopupLogin", false);
     },
+  },
+
+  created() {
+    const logged = localStorage.getItem("isLogged");
+    if (logged) {
+      this.$store.commit("account/setLogged", true);
+    }
   },
 };
 </script>

@@ -53,7 +53,7 @@
             </div>
           </div>
           <div class="col-12 col-md-5">
-            <SfButton style="width: 100%">
+            <SfButton style="width: 100%" @click="actionAuctionNow">
               Đấu giá ngay
             </SfButton>
           </div>
@@ -163,7 +163,6 @@ export default {
 
   methods: {
     fetchProductDetail() {
-      console.log("id: ", this.$route.params.id);
       this.$axios
         .get(`Product/GetProductForView?id=${this.$route.params.id}`)
         .then((data) => {
@@ -174,6 +173,15 @@ export default {
           }
           return;
         });
+    },
+
+    actionAuctionNow() {
+      const token = localStorage.getItem("token");
+      if (token) {
+        console.log("call api auction");
+      } else {
+        this.$store.commit("account/setTogglePopupLogin", true);
+      }
     },
   },
 

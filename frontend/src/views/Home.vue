@@ -12,7 +12,7 @@
       />
     </SfHero>
 
-    <SfBannerGrid
+    <!-- <SfBannerGrid
       class="mb-5"
       :banner-grid="bannerGrid"
       :style="{ maxWidth: '1240px', margin: 'auto' }"
@@ -28,7 +28,7 @@
           :class="item.class"
         />
       </template>
-    </SfBannerGrid>
+    </SfBannerGrid> -->
 
     <CollectionProduct type="hightlight" title="SẢN PHẨM NỔI BẬT" />
 
