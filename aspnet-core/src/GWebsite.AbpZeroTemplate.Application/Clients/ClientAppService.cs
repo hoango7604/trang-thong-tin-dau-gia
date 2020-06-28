@@ -58,6 +58,17 @@ namespace GWebsite.AbpZeroTemplate.Web.Core.Clients
             return GetList(filter);
         }
 
+        public bool Login(string username, string password)
+        {
+            var client = clientRepository.GetAll().Where(x => !x.IsDelete).SingleOrDefault(x => x.Username.Equals(username) && x.Password.Equals(password));
+            if (client != null)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         #endregion public methods
 
         #region private methods

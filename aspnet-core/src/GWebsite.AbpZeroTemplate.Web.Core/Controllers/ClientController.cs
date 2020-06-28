@@ -45,6 +45,12 @@ namespace GWebsite.AbpZeroTemplate.Application.Controllers
             clientAppService.CreateOrEditClient(input);
         }
 
+        [HttpPost]
+        public void Login([FromBody] string username, [FromBody] string password)
+        {
+            clientAppService.Login(username, password);
+        }
+
         [HttpDelete("{id}")]
         public void DeleteClient(int id)
         {

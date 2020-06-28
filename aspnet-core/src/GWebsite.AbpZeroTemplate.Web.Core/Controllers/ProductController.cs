@@ -50,6 +50,12 @@ namespace GWebsite.AbpZeroTemplate.Application.Controllers
             productAppService.CreateOrEditProduct(input);
         }
 
+        [HttpPost]
+        public void Bidding([FromBody] int id, [FromBody] int clientId)
+        {
+            productAppService.Bidding(id, clientId);
+        }
+
         [HttpDelete("{id}")]
         public void DeleteProduct(int id)
         {

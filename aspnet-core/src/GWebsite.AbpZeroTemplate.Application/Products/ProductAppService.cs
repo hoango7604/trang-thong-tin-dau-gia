@@ -4,8 +4,8 @@ using Abp.Linq.Extensions;
 using GWebsite.AbpZeroTemplate.Application;
 using GWebsite.AbpZeroTemplate.Application.Share.Products;
 using GWebsite.AbpZeroTemplate.Application.Share.Products.Dto;
-using GWebsite.AbpZeroTemplate.Application.Share.Auctions;
-using GWebsite.AbpZeroTemplate.Application.Share.Auctions.Dto;
+using GWebsite.AbpZeroTemplate.Application.Share.AuctionDetails;
+using GWebsite.AbpZeroTemplate.Application.Share.AuctionDetails.Dto;
 using GWebsite.AbpZeroTemplate.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -19,15 +19,15 @@ namespace GWebsite.AbpZeroTemplate.Web.Core.Products
     public class ProductAppService : GWebsiteAppServiceBase, IProductAppService
     {
         private readonly IRepository<Product> productRepository;
-        private readonly IRepository<Auction> auctionRepository;
+        private readonly IAuctionDetailAppService auctionDetailAppService;
 
         public ProductAppService(
             IRepository<Product> productRepository,
-            IRepository<Auction> auctionRepository
+            IAuctionDetailAppService auctionDetailAppService
         )
         {
             this.productRepository = productRepository;
-            this.auctionRepository = auctionRepository;
+            this.auctionDetailAppService = auctionDetailAppService;
         }
 
         #region public methods
@@ -84,6 +84,27 @@ namespace GWebsite.AbpZeroTemplate.Web.Core.Products
                 totalCount,
                 items.Select(item => ObjectMapper.Map<ProductDto>(item)).ToList()
             );
+        }
+
+        public void Bidding(int id, int clientId)
+        {
+            ProductDto product = Get(id);
+            if (product.WinnerClientId > 0)
+            {
+                product.CurrentPrice += product.StepPrice;
+            }
+            product.WinnerClientId = clientId;
+            Edit(product);
+
+            var auctionDetailDto = new AuctionDetailDto()
+            {
+                Id = 0,
+                AuctionId = product.AuctionId,
+                ClientId = clientId,
+                Price = product.CurrentPrice,
+                ProductId = product.Id,
+            };
+            auctionDetailAppService.CreateOrEditAuctionDetail(auctionDetailDto);
         }
 
         #endregion public methods
