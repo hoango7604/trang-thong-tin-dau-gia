@@ -15,6 +15,6 @@ namespace GWebsite.AbpZeroTemplate.Application.Share.Clients
         void DeleteClient(int id);
         PagedResultDto<ClientDto> GetClients(ClientFilter filter);
         ClientDto GetClientForView(int id);
-        bool Login(ClientLogin login);
+        ClientDto Login(ClientLogin login);
     }
 }
