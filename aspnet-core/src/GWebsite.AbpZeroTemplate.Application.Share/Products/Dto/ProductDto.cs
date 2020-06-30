@@ -24,5 +24,6 @@ namespace GWebsite.AbpZeroTemplate.Application.Share.Products.Dto
         public string EnergySource { get; set; }
         public string Detail { get; set; }
         public int AuctionId { get; set; }
+        public bool IsPaid { get; set; }
     }
 }
