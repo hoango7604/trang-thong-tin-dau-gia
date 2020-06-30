@@ -148,6 +148,9 @@ export default {
     },
     actionLogin() {
       this.$store.dispatch("account/login", this.formLogin);
+      if (!this.isErrorLogin) {
+        location.reload();
+      }
     },
 
     actionRegister() {
