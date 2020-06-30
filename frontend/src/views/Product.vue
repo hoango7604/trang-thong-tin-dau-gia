@@ -162,8 +162,8 @@ export default {
   },
 
   methods: {
-    fetchProductDetail() {
-      this.$axios
+    async fetchProductDetail() {
+      await this.$axios
         .get(`Product/GetProductForView?id=${this.$route.params.id}`)
         .then((data) => {
           const { result, success } = data.data;
@@ -173,6 +173,32 @@ export default {
           }
           return;
         });
+    },
+
+    async fetchUsersAuctioning() {
+      const { currentAuction } = this.$store.state.common;
+      await this.$axios
+        .get("AuctionDetail/GetAuctionDetailsByFilter", {
+          params: {
+            productId: this.$route.params.id,
+            auctionId: currentAuction.id,
+          },
+        })
+        .then((data) => {
+          const { result, success } = data.data;
+          console.log("fetchUsersAuctioning -> result", result);
+          if (success) {
+            // this.product = result.items;
+          }
+          return;
+        });
+    },
+
+    async fetchCurrentAuction() {
+      const cur = this.$store.state.common.currentAuction;
+      if (!cur) {
+        await this.$store.dispatch("common/getCurrentAuction");
+      }
     },
 
     async actionAuctionNow() {
@@ -193,8 +219,10 @@ export default {
     },
   },
 
-  created() {
-    this.fetchProductDetail();
+  async created() {
+    await this.fetchCurrentAuction();
+    await this.fetchProductDetail();
+    await this.fetchUsersAuctioning();
   },
 };
 </script>

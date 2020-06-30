@@ -23,5 +23,6 @@ namespace GWebsite.AbpZeroTemplate.Core.Models
         public string EnergySource { get; set; }
         public string Detail { get; set; }
         public int AuctionId { get; set; }
+        public bool IsPaid { get; set; }
     }
 }

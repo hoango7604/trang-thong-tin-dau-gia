@@ -4,6 +4,7 @@ import axios from "axios";
 import account from "./account.js";
 import auction from "./auction.js";
 import product from "./product.js";
+import common from "./common.js";
 
 Vue.use(Vuex);
 
@@ -16,6 +17,7 @@ export default new Vuex.Store({
     account,
     auction,
     product,
+    common,
   },
   strict: debug,
 });
