@@ -1,11 +1,45 @@
 <template>
-  <h1>Danh muc san pham</h1>
+  <div>
+    <SfBreadcrumbs :breadcrumbs="breadcrumbs" class="mb-4" />
+    <div class="d-flex mb-4">
+      <SfCheckbox v-model="filter.rolex" name="Rolex" label="Rolex" />
+      <SfCheckbox v-model="filter.rolex" name="Rolex" label="Rolex" />
+      <SfCheckbox v-model="filter.rolex" name="Rolex" label="Rolex" />
+    </div>
+    <h2 class="text-center mb-4">Danh sách sản phẩm</h2>
+    <div class="row mb-4">
+      <ProductCard
+        v-for="index in 12"
+        :key="index"
+        :title="index"
+        :link="`/product/${index}`"
+        :primaryPrice="index"
+        :startPrice="index"
+      ></ProductCard>
+    </div>
+  </div>
 </template>
 
 <script>
+import { SfBreadcrumbs, SfCheckbox, SfProductCard } from "@storefront-ui/vue";
+import ProductCard from "@/components/ProductCard";
+
 export default {
+  components: {
+    SfBreadcrumbs,
+    SfCheckbox,
+    SfProductCard,
+    ProductCard,
+  },
   data() {
     return {
+      breadcrumbs: [
+        { text: "Trang chủ", link: "/" },
+        { text: "Đấu giá trực tuyến", link: "/auction" },
+      ],
+      filter: {
+        rolex: false,
+      },
       auctions: [],
       currentAuctionId: null,
       categories: [],
@@ -55,3 +89,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.sf-checkbox {
+  margin-right: 16px;
+}
+</style>
