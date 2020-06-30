@@ -17,5 +17,6 @@ namespace GWebsite.AbpZeroTemplate.Application.Share.Products.Dto
         public string ProductId { get; set; }
         public string Brand { get; set; }
         public int AuctionId { get; set; }
+        public bool IsPaid { get; set; }
     }
 }

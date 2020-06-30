@@ -1,0 +1,3 @@
+// Lay thong tin user dang dau gia trong product 
+// Payment dung api nao , va co shipping address
+// Get current auction lam sao
