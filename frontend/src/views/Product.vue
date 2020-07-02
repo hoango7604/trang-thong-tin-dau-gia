@@ -13,29 +13,29 @@
         :enable-zoom="true"
       />
       <div class="col-12 col-md-6">
-        <SfHeading :title="product.name" :level="3"></SfHeading>
+        <SfHeading :title="product.name" :level="2"></SfHeading>
         <SfDivider />
         <div class="row mt-4">
           <div class="col-12 col-md-7">
             <div class="d-flex justify-content-between">
               <p>
                 Giá gốc <br />
-                <b> {{ product.giaGoc | formatCurrency }} </b>
+                <b> {{ product.primaryPrice | formatCurrency }} </b>
               </p>
               <p>
                 Khởi điểm <br />
-                <b> {{ product.giaKhoiDiem | formatCurrency }} </b>
+                <b> {{ product.startPrice | formatCurrency }} </b>
               </p>
               <p>
                 Bước giá <br />
-                <b> {{ product.buocGia | formatCurrency }} </b>
+                <b> {{ product.stepPrice | formatCurrency }} </b>
               </p>
             </div>
             <div class="d-flex">
               <p>
                 Giá hiện tại <br />
                 <b class="product__price">
-                  {{ product.giaHienTai | formatCurrency }}
+                  {{ product.currentPrice | formatCurrency }}
                 </b>
               </p>
 
@@ -62,13 +62,22 @@
         <SfDivider></SfDivider>
 
         <div class="mt-4">
-          <SfProperty
-            class="product__property"
-            v-for="item in product.info"
-            :key="item.name"
-            :name="item.name"
-            :value="item.value"
-          />
+          <h4>Danh sách người đấu</h4>
+          <SfTable>
+            <SfTableHeading>
+              <SfTableHeader v-for="header in tableHeaders" :key="header">{{
+                header
+              }}</SfTableHeader>
+            </SfTableHeading>
+            <SfTableRow v-for="(row, key) in tableRows" :key="key">
+              <SfTableData
+                v-for="data in row"
+                :key="data"
+                :class="status[data]"
+                >{{ data }}</SfTableData
+              >
+            </SfTableRow>
+          </SfTable>
         </div>
       </div>
     </div>
@@ -77,8 +86,17 @@
     <div class="row">
       <div class="col-12 col-md-8">
         <SfTabs>
-          <SfTab v-for="tab in tabs" :key="tab.title" :title="tab.title">
-            <p v-html="tab.content"></p>
+          <SfTab title="Chi tiết sản phẩm">
+            <SfProperty
+              class="product__property"
+              v-for="item in info"
+              :key="item.name"
+              :name="item.name"
+              :value="item.value"
+            />
+          </SfTab>
+          <SfTab title="Hướng dẫn đấu giá">
+            Hướng dẫn đấu giá đang được cập nhật.
           </SfTab>
         </SfTabs>
       </div>
@@ -123,42 +141,17 @@ export default {
         { text: "Trang chủ", link: "/" },
         { text: "Đấu giá trực tuyến", link: "/" },
       ],
-      images: [
-        {
-          alt: "Product A",
-          mobile: { url: require("@/assets/img/productA.jpg") },
-          desktop: { url: require("@/assets/img/productA.jpg") },
-          zoom: { url: require("@/assets/img/productA.jpg") },
-        },
-      ],
-      tabs: [
-        {
-          title: "Chi tiết sản phẩm",
-          content: `<iframe width="560" height="315" src="https://www.youtube.com/embed/OmHG_UAeWJc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`,
-        },
-        {
-          title: "Hướng dẫn đấu giá",
-          content: "Hướng dẫn đấu giá đang được cập nhật.",
-        },
-      ],
+      images: [],
       sliderOptions: { autoplay: false, rewind: true, gap: 0 },
-      product: {
-        name: "STUHRLING ORIGINAL ST-557.02",
-        giaGoc: 8660000,
-        giaKhoiDiem: 5196000,
-        buocGia: 100000,
-        giaHienTai: 5196000,
-        winner: "Hưng Trần",
-        info: [
-          { name: "Mã sản phẩm", value: "ST-557.02" },
-          { name: "Thương hiệu", value: "Thụy Sĩ" },
-          { name: "Bảo hành", value: "10 năm" },
-          { name: "Đường kính mặt", value: "42mm" },
-          { name: "Độ chịu nước", value: "5 ATM" },
-          { name: "Năng lượng sử dụng", value: "Quartz/Pin" },
-        ],
-      },
-      userAuctioning: [],
+      product: [],
+      info: [],
+      tableHeaders: ["Tên", "Giá đấu", "Thời gian"],
+      tableRows: [
+        ["#35767", "4th Nov", "Paypal"],
+        ["#35767", "4th Nov", "Visa"],
+        ["#35767", "4th Nov", "Paypal"],
+      ],
+      status: { Finalise: "text-success", "In process": "text-warning" },
     };
   },
 
@@ -169,7 +162,24 @@ export default {
         .then((data) => {
           const { result, success } = data.data;
           if (success) {
-            // this.product = result.items;
+            this.product = result;
+            this.images = [
+              {
+                alt: "Product",
+                mobile: { url: result.imageUrl },
+                desktop: { url: result.imageUrl },
+                zoom: { url: result.imageUrl },
+              },
+            ];
+
+            this.info = [
+              { name: "Mã sản phẩm", value: result.productId },
+              { name: "Thương hiệu", value: result.brand },
+              { name: "Bảo hành", value: `${result.warranty} năm` },
+              { name: "Đường kính mặt", value: `${result.diameter}mm` },
+              { name: "Độ chịu nước", value: "5 ATM" },
+              { name: "Năng lượng sử dụng", value: result.energySource },
+            ];
           }
           return;
         });
@@ -190,9 +200,11 @@ export default {
           const { result, success } = data.data;
           console.log("fetchUsersAuctioning -> result", result);
           if (success) {
+            // Get nguoi dung dang dau gia trong san pham
             this.userAuctioning = null;
             const { items } = result;
             if (items) {
+              // vi khong lay dc truc tiep thong tin user nen phai goi api get tung user theo id
               this.userAuctioning = await Promise.all(
                 items.map(async (value) => {
                   return await this.$store.dispatch("common/getInfoUserById", {

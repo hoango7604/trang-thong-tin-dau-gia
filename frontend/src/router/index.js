@@ -2,6 +2,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Account from "../views/Account.vue";
+import Checkout from "../views/Checkout.vue";
+import Auction from "../views/Auction.vue";
 
 Vue.use(VueRouter);
 
@@ -43,14 +45,17 @@ const routes = [
   {
     path: "/auction/:id",
     name: "Auction",
-    component: function() {
-      return import("../views/Auction.vue");
-    },
+    component: Auction,
   },
   {
     path: "/account",
     name: "Account",
     component: Account,
+  },
+  {
+    path: "/checkout",
+    name: "Checkout",
+    component: Checkout,
   },
 ];
 

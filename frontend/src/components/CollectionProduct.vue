@@ -2,34 +2,19 @@
   <div class="mb-5 mt-5">
     <SfHeading :level="level" :title="title" />
 
-    <SfCarousel :style="{ maxWidth: '1240px', margin: 'auto' }">
-      <SfCarouselItem v-for="index in 12" :key="index">
-        <SfProductCard
-          :image="image"
-          :image-width="imageWidth"
-          :image-height="imageHeight"
-          :badge-label="badgeLabel"
-          :badge-color="badgeColor"
-          :link-tag="linkTag"
-          :wishlistIcon="false"
-          :show-add-to-cart-button="showAddToCartButton"
-          :add-to-cart-disabled="addToCartDisabled"
-          :is-added-to-cart="isAddedToCart"
-          @click:is-added-to-cart="alert('@click:is-added-to-cart')"
+    <SfCarousel
+      :style="{ maxWidth: '1240px', margin: 'auto' }"
+      v-if="products.length"
+    >
+      <SfCarouselItem v-for="(product, i) in products" :key="i">
+        <ProductCard
+          :title="product.name"
+          :image="product.imageUrl"
+          :link="`/product/${product.id}`"
+          :primaryPrice="product.primaryPrice"
+          :startPrice="product.startPrice"
         >
-          <div slot="title" class="title">
-            <a :href="link" class="sf-product-card__link">
-              <h3 class="sf-product-card__title">{{ productTitle }}</h3>
-            </a>
-          </div>
-          <div slot="price" class="price">
-            <p class="price-original">Giá gốc: {{ regularPrice }}</p>
-            <p>Giá khởi điểm: {{ specialPrice }}</p>
-          </div>
-          <div slot="add-to-cart-icon">
-            <img :src="hammer" alt="#" />
-          </div>
-        </SfProductCard>
+        </ProductCard>
       </SfCarouselItem>
     </SfCarousel>
   </div>
@@ -39,12 +24,14 @@
 import { SfCarousel } from "@storefront-ui/vue";
 import { SfProductCard } from "@storefront-ui/vue";
 import { SfHeading } from "@storefront-ui/vue";
+import ProductCard from "@/components/ProductCard";
 
 export default {
   components: {
     SfCarousel,
     SfHeading,
     SfProductCard,
+    ProductCard,
   },
 
   props: {
@@ -60,27 +47,17 @@ export default {
       type: String,
       default: "hightlight",
     },
+    categoryId: {
+      type: Number,
+    },
   },
 
   data() {
     return {
-      hammer: require("@/assets/icon/hammer.svg"),
-      image: {
-        mobile: { url: require("@/assets/storybook/Home/productB.jpg") },
-        desktop: { url: require("@/assets/storybook/Home/productB.jpg") },
+      settings: {
+        arrows: true,
+        dots: true,
       },
-      imageWidth: 316,
-      imageHeight: 316,
-      badgeLabel: "time cd",
-      badgeColor: "color-danger",
-      productTitle: "Stuhrling Original ST-571.3345K54",
-      link: "/product/3",
-      linkTag: "",
-      regularPrice: "$10.99",
-      specialPrice: "$5.09",
-      showAddToCartButton: true,
-      isAddedToCart: false,
-      addToCartDisabled: false,
       products: [],
     };
   },
@@ -92,13 +69,14 @@ export default {
         if (success) {
           this.products = result.items;
         }
-        return;
       });
     },
     fetchProductsByCategory() {
       this.$axios
         .get("Product/GetProductsByFilter", {
-          categoryId: this.categoryId,
+          params: {
+            CategoryId: this.categoryId,
+          },
         })
         .then((data) => {
           console.log("fetchProductsByCategory -> data", data);
@@ -106,7 +84,6 @@ export default {
           if (success) {
             this.products = result.items;
           }
-          return;
         });
     },
   },

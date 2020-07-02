@@ -1,14 +1,50 @@
 <template>
-  <h1>Danh muc san pham</h1>
+  <div>
+    <SfBreadcrumbs :breadcrumbs="breadcrumbs" class="mb-4" />
+    <div class="d-flex mb-4">
+      <SfCheckbox v-model="filter.rolex" name="Rolex" label="Rolex" />
+      <SfCheckbox v-model="filter.rolex" name="Rolex" label="Rolex" />
+      <SfCheckbox v-model="filter.rolex" name="Rolex" label="Rolex" />
+    </div>
+    <h2 class="text-center mb-4">Danh sách sản phẩm</h2>
+    <div class="row mb-4">
+      <ProductCard
+        v-for="product in products"
+        :key="product.id"
+        :title="product.name"
+        :image="product.imageUrl"
+        :link="`/product/${product.id}`"
+        :primaryPrice="product.primaryPrice"
+        :startPrice="product.startPrice"
+      ></ProductCard>
+    </div>
+  </div>
 </template>
 
 <script>
+import { SfBreadcrumbs, SfCheckbox, SfProductCard } from "@storefront-ui/vue";
+import ProductCard from "@/components/ProductCard";
+
 export default {
+  components: {
+    SfBreadcrumbs,
+    SfCheckbox,
+    SfProductCard,
+    ProductCard,
+  },
   data() {
     return {
+      breadcrumbs: [
+        { text: "Trang chủ", link: "/" },
+        { text: "Đấu giá trực tuyến", link: "/" },
+      ],
+      filter: {
+        rolex: false,
+      },
       auctions: [],
       currentAuctionId: null,
       categories: [],
+      products: [],
     };
   },
 
@@ -23,8 +59,7 @@ export default {
       });
       const { success, result } = res.data;
       if (success) {
-        this.auctions = result.items;
-        console.log("auctions", this.auctions);
+        this.products = result.items;
       }
     },
 
@@ -55,3 +90,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.sf-checkbox {
+  margin-right: 16px;
+}
+</style>
