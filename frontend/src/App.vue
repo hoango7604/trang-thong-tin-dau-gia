@@ -13,7 +13,7 @@
       :cart-items-qty="cartItemsQty"
       @click:cart="alert('@click:cart')"
       @click:wishlist="alert('@click:wishlist')"
-      @click:account="alert('@click:account')"
+      @click:account="$router.push('/account')"
       @change:search="searchValue = $event"
     >
       <template #navigation>
@@ -22,20 +22,20 @@
             {{ item.name }}
           </SfLink>
         </SfHeaderNavigationItem>
-        <button @click="openPopup()" v-if="!isLogged">Login</button>
-        <button @click="logout()" v-if="isLogged">Logout</button>
+        <div class="sf-header-navigation-item" v-if="!isLogged">
+          <a href="#" class="sf-link" @click="openPopup()">Login</a>
+        </div>
+        <div class="sf-header-navigation-item" v-else>
+          <a href="#" class="sf-link" @click="logout()">Logout</a>
+        </div>
       </template>
     </SfHeader>
 
-    <section class="page-content mt-5">
+    <section class="page-content">
       <router-view />
     </section>
 
-    <PopupAccount
-      v-if="isOpenPopup"
-      :visible="isOpenPopup"
-      @closePopUp="closePopUp"
-    />
+    <PopupAccount :visible="isOpenPopup" @closePopUp="closePopUp" />
 
     <SfFooter :column="column" :multiple="multiple">
       <SfFooterColumn
@@ -91,8 +91,7 @@ export default {
       isMobile: false,
       navigation: [
         { name: "Trang chủ", link: "/" },
-        { name: "Danh mục sản phẩm", link: "/auction/0" },
-        { name: "Tài khoản của tôi", link: "/account" },
+        { name: "Danh mục", link: "/auction/0" },
         { name: "Phiên đã đấu", link: "/account" },
         { name: "Phiên vừa kết thúc", link: "/account" },
       ],
@@ -105,8 +104,8 @@ export default {
       activeIcon: "account",
       isSticky: true,
       searchPlaceholder: "Search for items",
-      cartIcon: "empty_cart",
-      wishlistIcon: "heart",
+      cartIcon: false,
+      wishlistIcon: false,
       accountIcon: "profile",
       cartItemsQty: "0",
 
@@ -212,6 +211,7 @@ export default {
   --section-margin: 100px;
 }
 .page-content {
+  padding-top: 32px;
   min-height: 60vh;
   max-width: 1240px;
   margin: auto;

@@ -1,41 +1,28 @@
 <template>
   <div>
     <SfProductCardHorizontal
-      :image="image"
-      :title="title"
-      :link="link"
-      :link-tag="linkTag"
-      :regular-price="regularPrice"
-      :special-price="specialPrice"
+      v-for="product in products"
+      :key="product.id"
+      :imageWidth="240"
+      :imageHeight="240"
+      :image="product.imageUrl"
       :is-added-to-cart="isAddedToCart"
       :add-to-cart-disabled="addToCartDisabled"
       @input="quantity = $event"
     >
-      <template #configuration>
-        <SfProperty
-          class="desktop-only"
-          name="Size"
-          value="XS"
-          style="margin: 0 0 1rem 0;"
-        />
-        <SfProperty class="desktop-only" name="Color" value="white" />
-      </template>
-      <template #actions>
-        <SfButton
-          class="sf-button--text desktop-only"
-          @click="$emit('click:add-to-wishlist')"
-          style="margin: 0 0 1rem auto; display: block;"
+      <div slot="price" class="price">
+        <a
+          :href="`/product/${product.id}`"
+          class="sf-product-card__link  title"
         >
-          Save for later
-        </SfButton>
-        <SfButton
-          class="sf-button--text desktop-only"
-          @click="$emit('click:add-to-compare')"
-          style="margin: 0 0 0 auto; display: block;"
-        >
-          Add to compare
-        </SfButton>
-      </template>
+          <h3 class="sf-product-card__title">{{ product.name }}</h3>
+        </a>
+
+        <p class="price-original">
+          Giá gốc: {{ product.primaryPrice | formatCurrency }}
+        </p>
+        <span>Giá khởi điểm: {{ product.startPrice | formatCurrency }}</span>
+      </div>
     </SfProductCardHorizontal>
   </div>
 </template>
@@ -43,6 +30,7 @@
 import { SfProductCardHorizontal } from "@storefront-ui/vue";
 import { SfButton } from "@storefront-ui/vue";
 import { SfProperty } from "@storefront-ui/vue";
+
 export default {
   components: {
     SfProductCardHorizontal,
@@ -52,19 +40,28 @@ export default {
   data() {
     return {
       quantity: 1,
-      image: require("@/assets/img/productA.jpg"),
-      title: "Cream Beach Bag",
-      link: "",
-      linkTag: "",
-      regularPrice: "$10,99",
-      specialPrice: "",
       wishlistIcon: false,
       isOnWishlist: true,
       isOnWishlistIcon: "heart_fill",
-      maxRating: 5,
       isAddedToCart: false,
       addToCartDisabled: false,
+      products: [],
     };
+  },
+
+  created() {
+    this.fetchProductsHighlights();
+  },
+
+  methods: {
+    fetchProductsHighlights() {
+      this.$axios.get("Product/GetProductsByFilter").then((data) => {
+        const { result, success } = data.data;
+        if (success) {
+          this.products = result.items;
+        }
+      });
+    },
   },
 };
 </script>
@@ -78,5 +75,28 @@ export default {
 }
 .sf-product-card-horizontal__main {
   align-items: center;
+}
+.price {
+  color: #5ece7b;
+}
+.price p {
+  margin-bottom: 8px;
+}
+
+.price-original {
+  color: black;
+}
+.sf-product-card__link {
+  margin-bottom: 8px;
+  color: black;
+}
+.sf-product-card-horizontal {
+  margin-bottom: 16px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+}
+.sf-product-card-horizontal:hover {
+  transform: scale(1.1);
+  transition: all 0.2s;
 }
 </style>

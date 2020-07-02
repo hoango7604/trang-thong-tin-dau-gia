@@ -32,13 +32,9 @@
 
     <CollectionProduct type="hightlight" title="SẢN PHẨM NỔI BẬT" />
 
-    <CollectionProduct
-      type="category"
-      categoryId="0"
-      title="ĐỒNG HỒ STUHRLING"
-    />
+    <CollectionProduct type="category" :categoryId="3" title="ĐỒNG HỒ HUBLOT" />
 
-    <CollectionProduct type="category" categoryId="2" title="ĐỒNG HỒ CASIO" />
+    <CollectionProduct type="category" :categoryId="2" title="ĐỒNG HỒ MOVADO" />
   </div>
 </template>
 
@@ -125,3 +121,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.sf-footer {
+  background-color: #f8f9fa;
+}
+</style>
