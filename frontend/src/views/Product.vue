@@ -161,7 +161,6 @@ export default {
         .get(`Product/GetProductForView?id=${this.$route.params.id}`)
         .then((data) => {
           const { result, success } = data.data;
-          console.log("fetchProductDetail -> result", result);
           if (success) {
             this.product = result;
             this.images = [
@@ -188,18 +187,32 @@ export default {
 
     async fetchUsersAuctioning() {
       const { currentAuction } = this.$store.state.common;
+      console.log("fetchUsersAuctioning -> currentAuction", currentAuction);
       await this.$axios
         .get("AuctionDetail/GetAuctionDetailsByFilter", {
           params: {
             productId: this.$route.params.id,
             auctionId: currentAuction.id,
+            // auctionId: 3, // test
           },
         })
-        .then((data) => {
+        .then(async (data) => {
           const { result, success } = data.data;
           console.log("fetchUsersAuctioning -> result", result);
           if (success) {
-            // this.product = result.items;
+            // Get nguoi dung dang dau gia trong san pham
+            this.userAuctioning = null;
+            const { items } = result;
+            if (items) {
+              // vi khong lay dc truc tiep thong tin user nen phai goi api get tung user theo id
+              this.userAuctioning = await Promise.all(
+                items.map(async (value) => {
+                  return await this.$store.dispatch("common/getInfoUserById", {
+                    id: value.id,
+                  });
+                })
+              );
+            }
           }
           return;
         });
