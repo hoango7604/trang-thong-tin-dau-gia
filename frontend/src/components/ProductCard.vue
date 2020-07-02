@@ -16,8 +16,8 @@
       </a>
     </div>
     <div slot="price" class="price">
-      <p class="price-original">Giá gốc: {{ primaryPrice }}</p>
-      <p>Giá khởi điểm: {{ startPrice }}</p>
+      <p class="price-original">Giá gốc: {{ primaryPrice | formatCurrency }}</p>
+      <span>Giá khởi điểm: {{ startPrice | formatCurrency }}</span>
     </div>
     <div slot="add-to-cart-icon">
       <img :src="hammer" alt="#" />
@@ -57,8 +57,7 @@ export default {
       imageWidth: 316,
       imageHeight: 316,
       badgeLabel: "time cd",
-      badgeColor: "color-danger",
-      link: "/product/3",
+      badgeColor: "color-success",
       linkTag: "",
       isAddedToCart: false,
     };
@@ -68,7 +67,7 @@ export default {
 
 <style lang="css" scoped>
 .price {
-  color: red;
+  color: #5ece7b;
 }
 
 .price p {

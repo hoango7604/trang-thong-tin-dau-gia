@@ -9,12 +9,13 @@
     <h2 class="text-center mb-4">Danh sách sản phẩm</h2>
     <div class="row mb-4">
       <ProductCard
-        v-for="index in 12"
-        :key="index"
-        :title="index"
-        :link="`/product/${index}`"
-        :primaryPrice="index"
-        :startPrice="index"
+        v-for="product in products"
+        :key="product.id"
+        :title="product.name"
+        :image="product.imageUrl"
+        :link="`/product/${product.id}`"
+        :primaryPrice="product.primaryPrice"
+        :startPrice="product.startPrice"
       ></ProductCard>
     </div>
   </div>
@@ -35,7 +36,7 @@ export default {
     return {
       breadcrumbs: [
         { text: "Trang chủ", link: "/" },
-        { text: "Đấu giá trực tuyến", link: "/auction" },
+        { text: "Đấu giá trực tuyến", link: "/" },
       ],
       filter: {
         rolex: false,
@@ -43,6 +44,7 @@ export default {
       auctions: [],
       currentAuctionId: null,
       categories: [],
+      products: [],
     };
   },
 
@@ -57,8 +59,7 @@ export default {
       });
       const { success, result } = res.data;
       if (success) {
-        this.auctions = result.items;
-        console.log("auctions", this.auctions);
+        this.products = result.items;
       }
     },
 
