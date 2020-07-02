@@ -73,6 +73,15 @@ const actions = {
     // }
     // return null;
   },
+
+  async getInfoUserById({ commit }, payload) {
+    const res = await axios.get("Client/GetClientForView", {
+      params: {
+        id: payload.id,
+      },
+    });
+    return res.data.result;
+  },
 };
 
 export default {
