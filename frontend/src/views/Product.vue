@@ -210,13 +210,16 @@ export default {
 
     async fetchUsersAuctioning() {
       const { currentAuction } = this.$store.state.common;
+      console.log("fetchUsersAuctioning -> currentAuction", currentAuction);
       await this.$axios
         .get("AuctionDetail/GetAuctionDetailsByFilter", {
           params: {
-            ProductId: this.$route.params.id,
+            productId: this.$route.params.id,
+            auctionId: currentAuction.id,
+            // auctionId: 3, // test
           },
         })
-        .then((data) => {
+        .then(async (data) => {
           const { result, success } = data.data;
           console.log("fetchUsersAuctioning -> result", result);
           if (success) {
@@ -228,6 +231,19 @@ export default {
               return [user.fullName, user.price];
             });
             console.log("Joining user", this.joiningUsers);
+            // Get nguoi dung dang dau gia trong san pham
+            this.userAuctioning = null;
+            const { items } = result;
+            if (items) {
+              // vi khong lay dc truc tiep thong tin user nen phai goi api get tung user theo id
+              this.userAuctioning = await Promise.all(
+                items.map(async (value) => {
+                  return await this.$store.dispatch("common/getInfoUserById", {
+                    id: value.id,
+                  });
+                })
+              );
+            }
           }
           return;
         });
