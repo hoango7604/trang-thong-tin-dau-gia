@@ -8,15 +8,12 @@ import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 import "./assets/css/main.css";
 import axios from "axios";
-import VueCountdownTimer from "vuejs-countdown-timer";
 
 Vue.config.productionTip = false;
 
 axios.defaults.baseURL = "http://localhost:5000/api/";
 
 Vue.prototype.$axios = axios;
-Vue.use(VueCountdownTimer);
-
 Vue.use(ElementUI);
 
 Vue.filter("formatCurrency", (value) => {
