@@ -11,5 +11,6 @@ namespace GWebsite.AbpZeroTemplate.Core.Models
         public int ClientId { get; set; }
         public int ProductId { get; set; }
         public int Price { get; set; }
+        public string Address { get; set; }
     }
 }

@@ -118,6 +118,10 @@ namespace GWebsite.AbpZeroTemplate.Web.Core.Payments
             {
                 query = query.Where(x => x.Price == filter.Price);
             }
+            if (filter.Address != null)
+            {
+                query = query.Where(x => x.Address.ToLower().Equals(filter.Address));
+            }
 
             var totalCount = query.Count();
 
