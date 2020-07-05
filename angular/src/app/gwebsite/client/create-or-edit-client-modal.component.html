@@ -13,13 +13,10 @@
             <form #editForm="ngForm" novalidate (ngSubmit)="save()">
                 <div class="modal-header">
                     <h4 class="modal-title">
-                        <span *ngIf="demoModel.id"
-                            >{{ l("EditDemoModel") }}:
-                            {{ demoModel.name }}</span
+                        <span *ngIf="client.id"
+                            >Cập nhật khách hàng: {{ client.name }}</span
                         >
-                        <span *ngIf="!demoModel.id">{{
-                            l("CreateNewDemoModel")
-                        }}</span>
+                        <span *ngIf="!client.id">Tạo mới khách hàng</span>
                     </h4>
                     <button
                         type="button"
@@ -32,52 +29,63 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>{{ l("DemoModelValue") }} *</label>
+                        <label>Tên khách hàng *</label>
                         <input
-                            #valueInput="ngModel"
+                            #nameInput="ngModel"
                             class="form-control"
-                            type="number"
-                            min="0"
-                            name="Value"
-                            [(ngModel)]="demoModel.value"
+                            type="text"
+                            name="Name"
+                            [(ngModel)]="client.fullName"
                             required
                             maxlength="64"
                         />
                         <validation-messages
-                            [formCtrl]="valueInput"
+                            [formCtrl]="nameInput"
                         ></validation-messages>
                     </div>
                     <div class="form-group">
-                        <label>{{ l("DemoModelInfo") }} *</label>
+                        <label>Số điện thoại *</label>
                         <input
-                            #infoInput="ngModel"
+                            #phoneInput="ngModel"
                             class="form-control"
                             type="text"
-                            name="Info"
-                            [(ngModel)]="demoModel.info"
+                            name="Phone"
+                            [(ngModel)]="client.phone"
                             required
                             maxlength="64"
                         />
                         <validation-messages
-                            [formCtrl]="infoInput"
+                            [formCtrl]="phoneInput"
                         ></validation-messages>
                     </div>
                     <div class="form-group">
-                        <label for="dateInput"
-                            >{{ l("DemoModelDate") }} *</label
-                        >
+                        <label>Địa chỉ *</label>
                         <input
-                            id="dateInput"
-                            #dateInput
+                            #addressInput="ngModel"
                             class="form-control"
                             type="text"
-                            name="Date"
-                            [(ngModel)]="demoModel.date"
+                            name="Address"
+                            [(ngModel)]="client.address"
                             required
                             maxlength="64"
                         />
                         <validation-messages
-                            [formCtrl]="dateInput"
+                            [formCtrl]="addressInput"
+                        ></validation-messages>
+                    </div>
+                    <div class="form-group">
+                        <label>Mật khẩu *</label>
+                        <input
+                            #passwordInput="ngModel"
+                            class="form-control"
+                            type="password"
+                            name="Password"
+                            [(ngModel)]="client.password"
+                            required
+                            maxlength="64"
+                        />
+                        <validation-messages
+                            [formCtrl]="passwordInput"
                         ></validation-messages>
                     </div>
                 </div>
