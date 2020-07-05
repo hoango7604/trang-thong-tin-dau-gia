@@ -1,7 +1,6 @@
 <template>
   <div class="mb-5 mt-5">
     <SfHeading :level="level" :title="title" />
-
     <SfCarousel
       :style="{ maxWidth: '1240px', margin: 'auto' }"
       v-if="products.length"
@@ -10,6 +9,7 @@
         <ProductCard
           :title="product.name"
           :image="product.imageUrl"
+          :end-date="endDate"
           :link="`/product/${product.id}`"
           :primaryPrice="product.primaryPrice"
           :startPrice="product.startPrice"
@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import moment from "moment";
 import { SfCarousel } from "@storefront-ui/vue";
 import { SfProductCard } from "@storefront-ui/vue";
 import { SfHeading } from "@storefront-ui/vue";
@@ -59,17 +60,36 @@ export default {
         dots: true,
       },
       products: [],
+      curAunction: "",
+      endDate: "",
     };
   },
 
   methods: {
+    async fetchCurrentAuction() {
+      let cur = this.$store.state.common.currentAuction;
+      if (!cur) {
+        await this.$store.dispatch("common/getCurrentAuction");
+        cur = this.$store.state.common.currentAuction;
+      }
+      this.curAunction = cur;
+      this.endDate = cur.endDate;
+      console.log(this.endDate);
+    },
+
     fetchProductsHighlights() {
-      this.$axios.get("Product/GetProductsByFilter").then((data) => {
-        const { result, success } = data.data;
-        if (success) {
-          this.products = result.items;
-        }
-      });
+      this.$axios
+        .get("Product/GetProductsByFilter", {
+          params: {
+            AuctionId: this.curAunction.id,
+          },
+        })
+        .then((data) => {
+          const { result, success } = data.data;
+          if (success) {
+            this.products = result.items;
+          }
+        });
     },
     fetchProductsByCategory() {
       this.$axios
@@ -88,7 +108,8 @@ export default {
     },
   },
 
-  created() {
+  async created() {
+    await this.fetchCurrentAuction();
     if (this.type == "hightlight") {
       this.fetchProductsHighlights();
     } else if (this.type == "category") {
