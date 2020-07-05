@@ -220,6 +220,7 @@ export default {
     if (logged) {
       const user = JSON.parse(localStorage.getItem("user"));
       this.$store.commit("account/setLogged", true);
+      this.$store.dispatch("common/getCurrentAuction");
       this.$store.dispatch("common/getCartByUserId", {
         userId: user.id,
       });

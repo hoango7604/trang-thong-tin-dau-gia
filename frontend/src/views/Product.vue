@@ -171,6 +171,7 @@ export default {
       isExpired: false,
       joiningUsers: [],
       winner: "",
+      userAuctioning: "",
     };
   },
 
@@ -231,19 +232,20 @@ export default {
               return [user.fullName, user.price];
             });
             console.log("Joining user", this.joiningUsers);
-            // Get nguoi dung dang dau gia trong san pham
-            this.userAuctioning = null;
-            const { items } = result;
-            if (items) {
-              // vi khong lay dc truc tiep thong tin user nen phai goi api get tung user theo id
-              this.userAuctioning = await Promise.all(
-                items.map(async (value) => {
-                  return await this.$store.dispatch("common/getInfoUserById", {
-                    id: value.id,
-                  });
-                })
-              );
-            }
+            // // Get nguoi dung dang dau gia trong san pham
+            // this.userAuctioning = null;
+            // const { items } = result;
+            // if (items) {
+            //   // vi khong lay dc truc tiep thong tin user nen phai goi api get tung user theo id
+            //   this.userAuctioning = await Promise.all(
+            //     items.map(async (value) => {
+            //       return await this.$store.dispatch("common/getInfoUserById", {
+            //         id: value.id,
+            //       });
+            //     })
+            //   );
+            //   console.log(this.userAuctioning);
+            // }
           }
           return;
         });
@@ -290,6 +292,7 @@ export default {
   },
 
   async created() {
+    this.$store.dispatch("common/getCurrentAuction");
     await this.fetchProductDetail();
     await this.fetchCurrentAuction();
     await this.fetchUsersAuctioning();
