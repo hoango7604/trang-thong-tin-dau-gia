@@ -7,6 +7,7 @@ using GWebsite.AbpZeroTemplate.Application.Share.Customers.Dto;
 using GWebsite.AbpZeroTemplate.Application.Share.CustomUsers.Dto;
 using GWebsite.AbpZeroTemplate.Application.Share.DemoModels.Dto;
 using GWebsite.AbpZeroTemplate.Application.Share.MenuClients.Dto;
+using GWebsite.AbpZeroTemplate.Application.Share.Payments.Dto;
 using GWebsite.AbpZeroTemplate.Application.Share.Products.Dto;
 using GWebsite.AbpZeroTemplate.Core.Models;
 
@@ -49,6 +50,8 @@ namespace GWebsite.AbpZeroTemplate.Applications
             configuration.CreateMap<ProductDto, Product>();
             configuration.CreateMap<AuctionDetail, AuctionDetailDto>();
             configuration.CreateMap<AuctionDetailDto, AuctionDetail>();
+            configuration.CreateMap<Payment, PaymentDto>();
+            configuration.CreateMap<PaymentDto, Payment>();
         }
     }
 }

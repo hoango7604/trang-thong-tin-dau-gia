@@ -31,6 +31,7 @@ namespace GWebsite.AbpZeroTemplate.EntityFrameworkCore
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<AuctionDetail> AuctionDetails { get; set; }
+        public virtual DbSet<Payment> Payments { get; set; }
 
         /// <summary>
         /// GPermissions dùng cho bên Gwebsite
