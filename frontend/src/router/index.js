@@ -45,7 +45,9 @@ const routes = [
   {
     path: "/auction/:id",
     name: "Auction",
-    component: Auction,
+    component: function() {
+      return import("../views/Auction.vue");
+    },
   },
   {
     path: "/account",

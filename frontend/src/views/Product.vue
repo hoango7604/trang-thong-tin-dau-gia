@@ -47,13 +47,29 @@
                 />
                 <p class="d-inline-block">
                   Người chiến thắng <br />
-                  <b> {{ product.winner }} </b>
+                  <b> {{ winner }} </b>
                 </p>
               </div>
             </div>
           </div>
           <div class="col-12 col-md-5">
-            <SfButton style="width: 100%" @click="actionAuctionNow">
+            <Countdown
+              v-if="endDate && !isExpired"
+              class="countdown"
+              :endDate="endDate"
+              :isBadge="false"
+              @expired="isExpired = true"
+            ></Countdown>
+            <SfButton
+              v-if="isExpired"
+              style="width: 100%"
+              class="button-aunction--expired"
+              @click="actionAuctionNow"
+              :disabled="true"
+            >
+              Đã kết thúc
+            </SfButton>
+            <SfButton v-else style="width: 100%" @click="actionAuctionNow">
               Đấu giá ngay
             </SfButton>
           </div>
@@ -61,7 +77,7 @@
 
         <SfDivider></SfDivider>
 
-        <div class="mt-4">
+        <div class="mt-4" v-if="joiningUsers.length">
           <h4>Danh sách người đấu</h4>
           <SfTable>
             <SfTableHeading>
@@ -121,9 +137,12 @@ import {
   SfProperty,
 } from "@storefront-ui/vue";
 import CollectionProductHorizontal from "@/components/CollectionProductHorizontal";
+import Countdown from "@/components/Countdown";
+import moment from "moment";
 
 export default {
   components: {
+    Countdown,
     CollectionProductHorizontal,
     SfBreadcrumbs,
     SfProperty,
@@ -145,13 +164,14 @@ export default {
       sliderOptions: { autoplay: false, rewind: true, gap: 0 },
       product: [],
       info: [],
-      tableHeaders: ["Tên", "Giá đấu", "Thời gian"],
-      tableRows: [
-        ["#35767", "4th Nov", "Paypal"],
-        ["#35767", "4th Nov", "Visa"],
-        ["#35767", "4th Nov", "Paypal"],
-      ],
+      tableHeaders: ["Tên", "Giá đấu"],
+      tableRows: [],
       status: { Finalise: "text-success", "In process": "text-warning" },
+      endDate: "",
+      isExpired: false,
+      joiningUsers: [],
+      winner: "",
+      userAuctioning: "",
     };
   },
 
@@ -163,6 +183,11 @@ export default {
           const { result, success } = data.data;
           if (success) {
             this.product = result;
+            console.log("Product info", this.product);
+
+            const winner = this.fetchUserDetail(result.winnerClientId);
+            this.winner = winner.fullName;
+
             this.images = [
               {
                 alt: "Product",
@@ -181,7 +206,6 @@ export default {
               { name: "Năng lượng sử dụng", value: result.energySource },
             ];
           }
-          return;
         });
     },
 
@@ -200,29 +224,53 @@ export default {
           const { result, success } = data.data;
           console.log("fetchUsersAuctioning -> result", result);
           if (success) {
-            // Get nguoi dung dang dau gia trong san pham
-            this.userAuctioning = null;
-            const { items } = result;
-            if (items) {
-              // vi khong lay dc truc tiep thong tin user nen phai goi api get tung user theo id
-              this.userAuctioning = await Promise.all(
-                items.map(async (value) => {
-                  return await this.$store.dispatch("common/getInfoUserById", {
-                    id: value.id,
-                  });
-                })
-              );
-            }
+            this.joiningUsers = result.items.map(async (item) => {
+              const userDetail = await this.fetchUserDetail(item.clientId);
+              return { ...item, ...userDetail };
+            });
+            this.tableRows = this.joiningUsers.map((user) => {
+              return [user.fullName, user.price];
+            });
+            console.log("Joining user", this.joiningUsers);
+            // // Get nguoi dung dang dau gia trong san pham
+            // this.userAuctioning = null;
+            // const { items } = result;
+            // if (items) {
+            //   // vi khong lay dc truc tiep thong tin user nen phai goi api get tung user theo id
+            //   this.userAuctioning = await Promise.all(
+            //     items.map(async (value) => {
+            //       return await this.$store.dispatch("common/getInfoUserById", {
+            //         id: value.id,
+            //       });
+            //     })
+            //   );
+            //   console.log(this.userAuctioning);
+            // }
           }
           return;
         });
     },
 
+    async fetchUserDetail(clientId) {
+      await this.$axios
+        .get("Client/GetClientForView", {
+          params: {
+            id: clientId,
+          },
+        })
+        .then((data) => {
+          return data.data.result;
+        });
+    },
+
     async fetchCurrentAuction() {
-      const cur = this.$store.state.common.currentAuction;
-      if (!cur) {
-        await this.$store.dispatch("common/getCurrentAuction");
-      }
+      await this.$axios
+        .get("Auction/GetAuctionForView", {
+          params: { id: this.product.auctionId },
+        })
+        .then((data) => {
+          this.endDate = data.data.result.endDate;
+        });
     },
 
     async actionAuctionNow() {
@@ -244,8 +292,9 @@ export default {
   },
 
   async created() {
-    await this.fetchCurrentAuction();
+    this.$store.dispatch("common/getCurrentAuction");
     await this.fetchProductDetail();
+    await this.fetchCurrentAuction();
     await this.fetchUsersAuctioning();
   },
 };
@@ -264,5 +313,14 @@ export default {
 .winner {
   width: 100%;
   max-width: 36px;
+}
+
+.button-aunction--expired {
+  --button-color: red;
+}
+
+.countdown {
+  font-size: 25px;
+  text-align: center;
 }
 </style>

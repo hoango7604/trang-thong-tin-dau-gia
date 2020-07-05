@@ -22,15 +22,22 @@
     <div slot="add-to-cart-icon">
       <img :src="hammer" alt="#" />
     </div>
+    <template #badge>
+      <Countdown :end-date="endDate"></Countdown>
+    </template>
   </SfProductCard>
 </template>
 
 <script>
+import Countdown from "@/components/Countdown";
 import { SfProductCard } from "@storefront-ui/vue";
+
 export default {
   components: {
     SfProductCard,
+    Countdown,
   },
+
   props: {
     title: {
       type: String,
@@ -49,6 +56,13 @@ export default {
     link: {
       type: String,
     },
+    badgeLabel: {
+      type: String,
+      default: "time cd",
+    },
+    endDate: {
+      type: String,
+    },
   },
 
   data() {
@@ -56,7 +70,6 @@ export default {
       hammer: require("@/assets/icon/hammer.svg"),
       imageWidth: 316,
       imageHeight: 316,
-      badgeLabel: "time cd",
       badgeColor: "color-success",
       linkTag: "",
       isAddedToCart: false,
