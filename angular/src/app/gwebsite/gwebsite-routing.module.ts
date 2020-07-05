@@ -7,6 +7,8 @@ import { CustomerComponent } from "./customer/customer.component";
 import { ClientComponent } from "./client/client.component";
 import { AuctionComponent } from "./auction/auction.component";
 import { ProductComponent } from "./product/product.component";
+import { CategoryComponent } from "./category/category.component";
+import { PaymentComponent } from "./payment/payment.component";
 
 @NgModule({
     imports: [
@@ -67,6 +69,26 @@ import { ProductComponent } from "./product/product.component";
                     {
                         path: "product",
                         component: ProductComponent,
+                        // data: { permission: 'Pages.Administration.Customer' }
+                    },
+                ],
+            },
+            {
+                path: "",
+                children: [
+                    {
+                        path: "category",
+                        component: CategoryComponent,
+                        // data: { permission: 'Pages.Administration.Customer' }
+                    },
+                ],
+            },
+            {
+                path: "",
+                children: [
+                    {
+                        path: "payment",
+                        component: PaymentComponent,
                         // data: { permission: 'Pages.Administration.Customer' }
                     },
                 ],

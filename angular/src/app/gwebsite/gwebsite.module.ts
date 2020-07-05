@@ -43,11 +43,19 @@ import { AuctionComponent } from "./auction/auction.component";
 import { ViewProductModalComponent } from "./product/view-product-modal.component";
 import { CreateOrEditProductModalComponent } from "./product/create-or-edit-product-modal.component";
 import { ProductComponent } from "./product/product.component";
+import { ViewCategoryModalComponent } from "./category/view-category-modal.component";
+import { CreateOrEditCategoryModalComponent } from "./category/create-or-edit-category-modal.component";
+import { CategoryComponent } from "./category/category.component";
+import { ViewPaymentModalComponent } from "./payment/view-payment-modal.component";
+import { CreateOrEditPaymentModalComponent } from "./payment/create-or-edit-payment-modal.component";
+import { PaymentComponent } from "./payment/payment.component";
 
 import {
     ClientServiceProxy,
     AuctionServiceProxy,
     ProductServiceProxy,
+    CategoryServiceProxy,
+    PaymentServiceProxy,
 } from "@shared/service-proxies/service-proxies";
 
 @NgModule({
@@ -89,6 +97,12 @@ import {
         ProductComponent,
         CreateOrEditProductModalComponent,
         ViewProductModalComponent,
+        CategoryComponent,
+        CreateOrEditCategoryModalComponent,
+        ViewCategoryModalComponent,
+        PaymentComponent,
+        CreateOrEditPaymentModalComponent,
+        ViewPaymentModalComponent,
     ],
     providers: [
         DemoModelServiceProxy,
@@ -97,6 +111,8 @@ import {
         ClientServiceProxy,
         AuctionServiceProxy,
         ProductServiceProxy,
+        CategoryServiceProxy,
+        PaymentServiceProxy,
     ],
 })
 export class GWebsiteModule {}

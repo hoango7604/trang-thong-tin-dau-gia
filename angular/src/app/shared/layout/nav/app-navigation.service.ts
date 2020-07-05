@@ -34,24 +34,24 @@ export class AppNavigationService {
                 "/app/admin/editions"
             ),
             new AppMenuItem("Administration", "", "flaticon-interface-8", "", [
-                new AppMenuItem(
-                    "MenuClient",
-                    "Pages.Administration.MenuClient",
-                    "flaticon-menu-1",
-                    "/app/gwebsite/menu-client"
-                ),
-                new AppMenuItem(
-                    "DemoModel",
-                    "Pages.Administration.DemoModel",
-                    "flaticon-menu-1",
-                    "/app/gwebsite/demo-model"
-                ),
-                new AppMenuItem(
-                    "Customer",
-                    "Pages.Administration.Customer",
-                    "flaticon-menu-1",
-                    "/app/gwebsite/customer"
-                ),
+                // new AppMenuItem(
+                //     "MenuClient",
+                //     "Pages.Administration.MenuClient",
+                //     "flaticon-menu-1",
+                //     "/app/gwebsite/menu-client"
+                // ),
+                // new AppMenuItem(
+                //     "DemoModel",
+                //     "Pages.Administration.DemoModel",
+                //     "flaticon-menu-1",
+                //     "/app/gwebsite/demo-model"
+                // ),
+                // new AppMenuItem(
+                //     "Customer",
+                //     "Pages.Administration.Customer",
+                //     "flaticon-menu-1",
+                //     "/app/gwebsite/customer"
+                // ),
 
                 new AppMenuItem(
                     "Client",
@@ -66,10 +66,22 @@ export class AppNavigationService {
                     "/app/gwebsite/auction"
                 ),
                 new AppMenuItem(
+                    "Danh mục",
+                    null,
+                    "flaticon-menu-1",
+                    "/app/gwebsite/category"
+                ),
+                new AppMenuItem(
                     "Sản phẩm",
                     null,
                     "flaticon-menu-1",
                     "/app/gwebsite/product"
+                ),
+                new AppMenuItem(
+                    "Thanh toán",
+                    null,
+                    "flaticon-menu-1",
+                    "/app/gwebsite/payment"
                 ),
             ]),
             new AppMenuItem("Systems", "", "flaticon-layers", "", [
