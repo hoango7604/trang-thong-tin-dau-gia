@@ -22,6 +22,23 @@
             {{ item.name }}
           </SfLink>
         </SfHeaderNavigationItem>
+        <el-dropdown
+          class="sf-header-navigation-item"
+          @command="handleCategoryClick"
+        >
+          <a href="#" class="sf-link">
+            Danh mục<i class="el-icon-arrow-down el-icon--right"></i>
+          </a>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item
+              v-for="item in categories"
+              :key="item.id"
+              :command="item.id"
+            >
+              {{ item.name }}
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
         <div class="sf-header-navigation-item" v-if="!isLogged">
           <a href="#" class="sf-link" @click="openPopup()">Login</a>
         </div>
@@ -91,7 +108,6 @@ export default {
       isMobile: false,
       navigation: [
         { name: "Trang chủ", link: "/" },
-        { name: "Danh mục", link: "/auction/0" },
         { name: "Phiên đã đấu", link: "/account" },
         { name: "Phiên vừa kết thúc", link: "/account" },
       ],
@@ -108,7 +124,6 @@ export default {
       wishlistIcon: false,
       accountIcon: "profile",
       cartItemsQty: "0",
-
       columns: [
         {
           title: "Về chúng tôi",
@@ -174,9 +189,17 @@ export default {
     isLogged() {
       return this.$store.state.account.isLogged;
     },
+
+    categories() {
+      return this.$store.state.common.category;
+    },
   },
 
   methods: {
+    handleCategoryClick(command) {
+      window.location.href = `/auction/${command}`;
+    },
+
     openPopup() {
       this.$store.commit("account/setTogglePopupLogin", true);
     },
@@ -207,6 +230,7 @@ export default {
 
 <style>
 :root {
+  --primary: teal;
   --link-text-decoration: none;
   --section-margin: 100px;
 }

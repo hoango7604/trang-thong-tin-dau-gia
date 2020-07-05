@@ -11,10 +11,7 @@
       @input="quantity = $event"
     >
       <div slot="price" class="price">
-        <a
-          :href="`/product/${product.id}`"
-          class="sf-product-card__link  title"
-        >
+        <a :href="`/product/${product.id}`" class="sf-product-card__link title">
           <h3 class="sf-product-card__title">{{ product.name }}</h3>
         </a>
 
@@ -91,6 +88,7 @@ export default {
   color: black;
 }
 .sf-product-card-horizontal {
+  border-radius: 8px;
   margin-bottom: 16px;
   padding: 16px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);

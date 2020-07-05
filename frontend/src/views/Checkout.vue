@@ -1,39 +1,51 @@
 <template>
   <div class="row">
     <div class="col-12 col-md-7">
-      <SfSteps v-model="active" :steps="steps" :can-go-back="canGoBack">
-        <SfStep v-for="(step, key) in steps" :key="key" :name="step">
-          <div
-            style="
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          height: 18.75rem;
-          background-color: #f2f2f2;
-        "
-          >
-            [#default slot content] {{ step }}
-          </div>
+      <SfSteps v-model="active" :can-go-back="canGoBack">
+        <SfStep name="Thông tin">
+          <SfInput v-model="form.name" label="Họ và tên" />
+          <SfInput v-model="form.phone" label="Số điện thoại" />
+          <SfInput v-model="form.address" label="Địa chỉ" />
+          <SfButton @click="active++">
+            <span class="mr-3">
+              Thanh toán Paypal
+            </span>
+            <img :src="require('@/assets/icon/paypal.svg')" />
+          </SfButton>
         </SfStep>
       </SfSteps>
     </div>
-    <div class="col-12 col-md-5"></div>
+    <div class="col-12 col-md-5 sidebar">
+      Sản phẩm ở đây
+    </div>
   </div>
 </template>
 
 <script>
-import { SfSteps, SfInput } from "@storefront-ui/vue";
+import { SfSteps, SfInput, SfButton, SfIcon } from "@storefront-ui/vue";
 export default {
   components: {
     SfSteps,
     SfInput,
+    SfButton,
+    SfIcon,
   },
   data() {
     return {
+      form: {
+        name: "",
+        phone: "",
+        address: "",
+      },
       active: 0,
-      steps: ["Personal details", "Shipping", "Payment"],
       canGoBack: true,
     };
   },
 };
 </script>
+
+<style scoped>
+.sidebar {
+  background: rgb(212, 209, 209);
+}
+</style>
