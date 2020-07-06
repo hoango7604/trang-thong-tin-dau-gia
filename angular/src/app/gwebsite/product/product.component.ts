@@ -14,8 +14,12 @@ import * as _ from "lodash";
 import { LazyLoadEvent } from "primeng/components/common/lazyloadevent";
 import { Paginator } from "primeng/components/paginator/paginator";
 import { Table } from "primeng/components/table/table";
-import { ProductServiceProxy } from "@shared/service-proxies/service-proxies";
+import {
+    ProductServiceProxy,
+    ClientServiceProxy,
+} from "@shared/service-proxies/service-proxies";
 import { CreateOrEditProductModalComponent } from "./create-or-edit-product-modal.component";
+import { flatMap } from "rxjs/operators";
 
 @Component({
     templateUrl: "./product.component.html",
@@ -41,6 +45,7 @@ export class ProductComponent extends AppComponentBase
     constructor(
         injector: Injector,
         private _productService: ProductServiceProxy,
+        private _clientService: ClientServiceProxy,
         private _activatedRoute: ActivatedRoute
     ) {
         super(injector);
@@ -102,7 +107,33 @@ export class ProductComponent extends AppComponentBase
                 this.primengTableHelper.totalRecordsCount = result.totalCount;
                 this.primengTableHelper.records = result.items;
                 this.primengTableHelper.hideLoadingIndicator();
+
+                return result.items.forEach((item) =>
+                    this._clientService
+                        .getClientForView(item.winnerClientId)
+                        .subscribe((client) => {
+                            const product = result.items.find(
+                                (product) =>
+                                    product.winnerClientId === client.id
+                            );
+                            if (product) {
+                                product["winnerClientName"] = client.fullName;
+                            }
+                        })
+                );
             });
+        // .pipe(flatMap(result => {
+        //     this.primengTableHelper.totalRecordsCount = result.totalCount;
+        //     this.primengTableHelper.records = result.items;
+        //     this.primengTableHelper.hideLoadingIndicator();
+
+        //     return result.items.map(item =>
+        //         this._clientService.getClientForView(item.winnerClientId)
+        //     )
+        // }))
+        // .subscribe((result) => {
+        //     console.log(result)
+        // });
     }
 
     deleteProduct(id): void {

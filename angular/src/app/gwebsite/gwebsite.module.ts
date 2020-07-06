@@ -18,6 +18,8 @@ import {
     FileUploadModule as PrimeNgFileUploadModule,
     InputMaskModule,
     PaginatorModule,
+    DropdownModule,
+    CheckboxModule,
 } from "primeng/primeng";
 import { TableModule } from "primeng/table";
 import { GWebsiteRoutingModule } from "./gwebsite-routing.module";
@@ -76,6 +78,8 @@ import {
         AutoCompleteModule,
         EditorModule,
         InputMaskModule,
+        DropdownModule,
+        CheckboxModule,
     ],
     declarations: [
         MenuClientComponent,

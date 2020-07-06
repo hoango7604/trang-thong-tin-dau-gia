@@ -75,29 +75,25 @@
                     </div>
                     <div class="form-group">
                         <label>Danh mục sản phẩm *</label>
-                        <input
-                            #categoryInput="ngModel"
-                            class="form-control"
-                            type="text"
-                            name="Category"
-                            [(ngModel)]="product.categoryId"
-                            required
-                            maxlength="64"
-                        />
-                        <validation-messages
-                            [formCtrl]="categoryInput"
-                        ></validation-messages>
+                        <p-dropdown
+                            [options]="categories"
+                            [(ngModel)]="selectedCategory"
+                            optionLabel="name"
+                            placeholder="Chọn danh mục"
+                            [ngModelOptions]="{ standalone: true }"
+                        ></p-dropdown>
                     </div>
                     <div class="form-group">
                         <label>Giá gốc *</label>
                         <input
                             #primaryInput="ngModel"
                             class="form-control"
-                            type="text"
+                            type="number"
                             name="Primary"
                             [(ngModel)]="product.primaryPrice"
                             required
                             maxlength="64"
+                            (change)="onChange($event)"
                         />
                         <validation-messages
                             [formCtrl]="primaryInput"
@@ -108,7 +104,7 @@
                         <input
                             #startInput="ngModel"
                             class="form-control"
-                            type="text"
+                            type="number"
                             name="Start"
                             [(ngModel)]="product.startPrice"
                             required
@@ -123,7 +119,7 @@
                         <input
                             #currentInput="ngModel"
                             class="form-control"
-                            type="text"
+                            type="number"
                             name="Current"
                             [(ngModel)]="product.currentPrice"
                             required
@@ -138,7 +134,7 @@
                         <input
                             #stepInput="ngModel"
                             class="form-control"
-                            type="text"
+                            type="number"
                             name="Step"
                             [(ngModel)]="product.stepPrice"
                             required
@@ -155,9 +151,8 @@
                             class="form-control"
                             type="text"
                             name="Winner"
-                            [(ngModel)]="product.winnerClientId"
-                            required
-                            maxlength="64"
+                            [(ngModel)]="winnerClientName"
+                            disabled
                         />
                         <validation-messages
                             [formCtrl]="winnerInput"
@@ -240,22 +235,22 @@
                     </div>
                     <div class="form-group">
                         <label>Phiên đấu giá *</label>
-                        <input
-                            #auctionIdInput="ngModel"
-                            class="form-control"
-                            type="text"
-                            name="AuctionId"
-                            [(ngModel)]="product.auctionId"
-                            required
-                            maxlength="64"
-                        />
-                        <validation-messages
-                            [formCtrl]="auctionIdInput"
-                        ></validation-messages>
+                        <p-dropdown
+                            [options]="auctions"
+                            [(ngModel)]="selectedAuction"
+                            optionLabel="name"
+                            placeholder="Chọn phiên đấu giá"
+                            [ngModelOptions]="{ standalone: true }"
+                        ></p-dropdown>
                     </div>
                     <div class="form-group">
                         <label>Đã thanh toán *</label>
-                        <input
+                        <p-checkbox
+                            [(ngModel)]="isPaid"
+                            binary="true"
+                            [ngModelOptions]="{ standalone: true }"
+                        ></p-checkbox>
+                        <!-- <input
                             #isPaidInput="ngModel"
                             class="form-control"
                             type="text"
@@ -263,10 +258,10 @@
                             [(ngModel)]="product.isPaid"
                             required
                             maxlength="64"
-                        />
-                        <validation-messages
+                        /> -->
+                        <!-- <validation-messages
                             [formCtrl]="isPaidInput"
-                        ></validation-messages>
+                        ></validation-messages> -->
                     </div>
                 </div>
                 <div class="modal-footer">
