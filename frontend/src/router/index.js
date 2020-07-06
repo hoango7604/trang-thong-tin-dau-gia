@@ -4,6 +4,7 @@ import Home from "../views/Home.vue";
 import Account from "../views/Account.vue";
 import Checkout from "../views/Checkout.vue";
 import Auction from "../views/Auction.vue";
+import PastAuction from "../views/PastAuction.vue";
 
 Vue.use(VueRouter);
 
@@ -58,6 +59,11 @@ const routes = [
     path: "/checkout",
     name: "Checkout",
     component: Checkout,
+  },
+  {
+    path: "/past-auction",
+    name: "PastAuction",
+    component: PastAuction,
   },
 ];
 
