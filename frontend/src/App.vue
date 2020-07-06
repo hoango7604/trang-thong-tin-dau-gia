@@ -108,8 +108,7 @@ export default {
       isMobile: false,
       navigation: [
         { name: "Trang chủ", link: "/" },
-        { name: "Phiên đã đấu", link: "/account" },
-        { name: "Phiên vừa kết thúc", link: "/account" },
+        { name: "Phiên đã đấu", link: "/past-auction" },
       ],
       searchValue: "",
       title: "Storefront UI",
