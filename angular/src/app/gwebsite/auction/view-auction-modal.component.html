@@ -30,11 +30,11 @@
                 </div>
                 <div class="form-group">
                     <label>Thời gian bắt đầu</label>
-                    <p>{{ auction.startDate }}</p>
+                    <p>{{ auction.startDate | date: "dd-MM-yyyy HH:mm" }}</p>
                 </div>
                 <div class="form-group">
                     <label>Thời gian kết thúc</label>
-                    <p>{{ auction.endDate }}</p>
+                    <p>{{ auction.endDate | date: "dd-MM-yyyy HH:mm" }}</p>
                 </div>
             </div>
             <div class="modal-footer">

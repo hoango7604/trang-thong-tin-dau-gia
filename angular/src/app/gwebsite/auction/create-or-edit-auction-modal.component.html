@@ -41,13 +41,11 @@
                     <div class="form-group">
                         <label>Thời gian bắt đầu *</label>
                         <input
-                            #startDateInput="ngModel"
+                            #startDateInput
                             class="form-control"
-                            type="text"
+                            type="datetime"
                             name="StartDate"
-                            [(ngModel)]="auction.startDate"
                             required
-                            maxlength="64"
                         />
                         <validation-messages
                             [formCtrl]="startDateInput"
@@ -56,13 +54,11 @@
                     <div class="form-group">
                         <label>Thời gian kết thúc *</label>
                         <input
-                            #endDateInput="ngModel"
+                            #endDateInput
                             class="form-control"
-                            type="text"
+                            type="datetime"
                             name="EndDate"
-                            [(ngModel)]="auction.endDate"
                             required
-                            maxlength="64"
                         />
                         <validation-messages
                             [formCtrl]="endDateInput"

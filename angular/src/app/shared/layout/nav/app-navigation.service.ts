@@ -54,7 +54,7 @@ export class AppNavigationService {
                 // ),
 
                 new AppMenuItem(
-                    "Client",
+                    "Khách hàng",
                     null,
                     "flaticon-menu-1",
                     "/app/gwebsite/client"

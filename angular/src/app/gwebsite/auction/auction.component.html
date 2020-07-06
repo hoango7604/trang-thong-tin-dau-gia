@@ -103,6 +103,7 @@
                                         >
                                         <span title="{{ record.startDate }}">{{
                                             truncateString(record.startDate)
+                                                | date: "dd-MM-yyyy HH:mm"
                                         }}</span>
                                     </td>
                                     <td>
@@ -111,6 +112,7 @@
                                         >
                                         <span title="{{ record.endDate }}">{{
                                             truncateString(record.endDate)
+                                                | date: "dd-MM-yyyy HH:mm"
                                         }}</span>
                                     </td>
                                     <td>
