@@ -47,7 +47,7 @@
                 />
                 <p class="d-inline-block">
                   Người chiến thắng <br />
-                  <b> {{ winner }} </b>
+                  <b v-if="winner"> {{ winner }} </b>
                 </p>
               </div>
             </div>
@@ -60,7 +60,7 @@
               :isBadge="false"
               @expired="isExpired = true"
             ></Countdown>
-            <SfButton
+            <!-- <SfButton
               v-if="isExpired"
               style="width: 100%"
               class="button-aunction--expired"
@@ -68,8 +68,9 @@
               :disabled="true"
             >
               Đã kết thúc
-            </SfButton>
-            <SfButton v-else style="width: 100%" @click="actionAuctionNow">
+            </SfButton> -->
+            <!-- v-else  -->
+            <SfButton style="width: 100%" @click="actionAuctionNow">
               Đấu giá ngay
             </SfButton>
           </div>
@@ -77,7 +78,7 @@
 
         <SfDivider></SfDivider>
 
-        <div class="mt-4" v-if="joiningUsers.length">
+        <div class="mt-4" v-if="userAuctioning.length">
           <h4>Danh sách người đấu</h4>
           <SfTable>
             <SfTableHeading>
@@ -171,7 +172,7 @@ export default {
       isExpired: false,
       joiningUsers: [],
       winner: "",
-      userAuctioning: "",
+      userAuctioning: [],
     };
   },
 
@@ -185,8 +186,15 @@ export default {
             this.product = result;
             console.log("Product info", this.product);
 
-            const winner = this.fetchUserDetail(result.winnerClientId);
-            this.winner = winner.fullName;
+            const winner = this.$axios
+              .get("Client/GetClientForView", {
+                params: {
+                  id: result.winnerClientId,
+                },
+              })
+              .then((data) => {
+                this.winner = data.data.result.fullName;
+              });
 
             this.images = [
               {
@@ -216,7 +224,7 @@ export default {
         .get("AuctionDetail/GetAuctionDetailsByFilter", {
           params: {
             productId: this.$route.params.id,
-            auctionId: currentAuction.id,
+            // auctionId: currentAuction.id,
             // auctionId: 3, // test
           },
         })
@@ -224,42 +232,44 @@ export default {
           const { result, success } = data.data;
           console.log("fetchUsersAuctioning -> result", result);
           if (success) {
-            this.joiningUsers = result.items.map(async (item) => {
-              const userDetail = await this.fetchUserDetail(item.clientId);
-              return { ...item, ...userDetail };
-            });
-            this.tableRows = this.joiningUsers.map((user) => {
-              return [user.fullName, user.price];
-            });
-            console.log("Joining user", this.joiningUsers);
-            // // Get nguoi dung dang dau gia trong san pham
-            // this.userAuctioning = null;
-            // const { items } = result;
-            // if (items) {
-            //   // vi khong lay dc truc tiep thong tin user nen phai goi api get tung user theo id
-            //   this.userAuctioning = await Promise.all(
-            //     items.map(async (value) => {
-            //       return await this.$store.dispatch("common/getInfoUserById", {
-            //         id: value.id,
-            //       });
-            //     })
-            //   );
-            //   console.log(this.userAuctioning);
-            // }
+            // Get nguoi dung dang dau gia trong san pham
+            this.userAuctioning = null;
+            const { items } = result;
+            if (items) {
+              // vi khong lay dc truc tiep thong tin user nen phai goi api get tung user theo id
+              this.userAuctioning = await Promise.all(
+                items.map(async (value) => {
+                  const data = await this.$store.dispatch(
+                    "common/getInfoUserById",
+                    {
+                      id: value.clientId,
+                    }
+                  );
+                  return { ...data, price: value.price };
+                })
+              );
+              console.log("user joinning", this.userAuctioning);
+
+              this.tableRows = this.userAuctioning
+                .map((user) => {
+                  return [user.fullName, this.formatCurrency(user.price)];
+                })
+                .reverse();
+            }
           }
           return;
         });
     },
 
-    async fetchUserDetail(clientId) {
-      await this.$axios
+    fetchUserDetail(clientId) {
+      this.$axios
         .get("Client/GetClientForView", {
           params: {
             id: clientId,
           },
         })
         .then((data) => {
-          return data.data.result;
+          if (data.data) return data.data.result;
         });
     },
 
@@ -288,6 +298,13 @@ export default {
       } else {
         this.$store.commit("account/setTogglePopupLogin", true);
       }
+    },
+
+    formatCurrency(value) {
+      return new Intl.NumberFormat("it-IT", {
+        style: "currency",
+        currency: "VND",
+      }).format(value);
     },
   },
 
@@ -322,5 +339,9 @@ export default {
 .countdown {
   font-size: 25px;
   text-align: center;
+}
+
+.product-page {
+  padding: 16px;
 }
 </style>
