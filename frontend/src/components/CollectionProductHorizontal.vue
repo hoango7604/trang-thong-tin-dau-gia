@@ -10,6 +10,15 @@
       :add-to-cart-disabled="addToCartDisabled"
       @input="quantity = $event"
     >
+      <div slot="image">
+        <a :href="`/product/${product.id}`">
+          <el-image
+            style="width: 120px; height: 120px"
+            :src="product.imageUrl"
+            fit="fill"
+          ></el-image>
+        </a>
+      </div>
       <div slot="price" class="price">
         <a :href="`/product/${product.id}`" class="sf-product-card__link title">
           <h3 class="sf-product-card__title">{{ product.name }}</h3>

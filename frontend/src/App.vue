@@ -241,4 +241,7 @@ export default {
   max-width: 1240px;
   margin: auto;
 }
+.el-dropdown {
+  display: flex !important;
+}
 </style>
