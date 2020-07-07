@@ -157,6 +157,7 @@ export default {
       const { rePassword, password } = this.formRegister;
       if (rePassword !== password) {
         //show error
+        //error
       } else {
         this.$store.dispatch("account/register", this.formRegister);
       }
