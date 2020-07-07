@@ -22,6 +22,11 @@
             {{ item.name }}
           </SfLink>
         </SfHeaderNavigationItem>
+        <SfHeaderNavigationItem v-if="isLogged">
+          <SfLink :link="`/checkout/${userId}`">
+            Thanh toán
+          </SfLink>
+        </SfHeaderNavigationItem>
         <el-dropdown
           class="sf-header-navigation-item"
           @command="handleCategoryClick"
@@ -40,10 +45,10 @@
           </el-dropdown-menu>
         </el-dropdown>
         <div class="sf-header-navigation-item" v-if="!isLogged">
-          <a href="#" class="sf-link" @click="openPopup()">Login</a>
+          <a href="#" class="sf-link" @click="openPopup()">Đăng nhập</a>
         </div>
         <div class="sf-header-navigation-item" v-else>
-          <a href="#" class="sf-link" @click="logout()">Logout</a>
+          <a href="#" class="sf-link" @click="logout()">Đăng xuất</a>
         </div>
       </template>
     </SfHeader>
@@ -178,6 +183,7 @@ export default {
       ],
       column: 4,
       multiple: false,
+      userId: "",
     };
   },
   computed: {
@@ -218,6 +224,7 @@ export default {
     const logged = localStorage.getItem("isLogged");
     if (logged) {
       const user = JSON.parse(localStorage.getItem("user"));
+      this.userId = user.id;
       this.$store.commit("account/setLogged", true);
       this.$store.dispatch("common/getCurrentAuction");
       this.$store.dispatch("common/getCartByUserId", {
