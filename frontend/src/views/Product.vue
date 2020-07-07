@@ -60,7 +60,7 @@
               :isBadge="false"
               @expired="isExpired = true"
             ></Countdown>
-            <!-- <SfButton
+            <SfButton
               v-if="isExpired"
               style="width: 100%"
               class="button-aunction--expired"
@@ -68,9 +68,8 @@
               :disabled="true"
             >
               Đã kết thúc
-            </SfButton> -->
-            <!-- v-else  -->
-            <SfButton style="width: 100%" @click="actionAuctionNow">
+            </SfButton>
+            <SfButton v-else style="width: 100%" @click="actionAuctionNow">
               Đấu giá ngay
             </SfButton>
           </div>
@@ -339,6 +338,9 @@ export default {
 .countdown {
   font-size: 25px;
   text-align: center;
+  color: red;
+  font-weight: 600;
+  margin-bottom: 16px;
 }
 
 .product-page {

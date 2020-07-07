@@ -46,7 +46,7 @@ const actions = {
         return result.items;
       }
     }
-    return null;
+    return [];
   },
 
   async getAllCategoryProduct({ commit }, payload) {

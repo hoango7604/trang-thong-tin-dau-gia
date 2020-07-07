@@ -59,6 +59,7 @@ export default {
             this.paidFor = true;
             // Payment bang paypal thanh cong ne
             // Call api payment
+            
           },
           onError: (err) => {
             console.log(err);

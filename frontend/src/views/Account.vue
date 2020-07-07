@@ -48,7 +48,35 @@
         </div>
       </el-card>
     </el-tab-pane>
-    <el-tab-pane label="Quản lý đơn hàng">Quản lí đơn hàng</el-tab-pane>
+    <el-tab-pane label="Quản lý đơn hàng">
+      <div>
+        <div
+          v-if="!products.length"
+          class="d-flex align-items-center w-100 h-100"
+          style="font-weight: 100"
+        >
+          Chưa đấu giá thành công sản phẩm nào!
+        </div>
+        <!-- product card  -->
+        <div
+          v-else
+          class="d-flex justify-content-start p-3"
+          v-for="index in 5"
+          :key="index"
+        >
+          <img
+            src="https://firebasestorage.googleapis.com/v0/b/newagent-kgryfg.appspot.com/o/dongho3_2.jpg?alt=media&token=b1ddf338-1058-46d4-9b43-2435fbdcb4ee"
+            alt="#"
+            width="110"
+            class="img-fluid mb-4"
+          />
+          <div class="ml-3">
+            <h4 class="mb-4">Rolex 2</h4>
+            {{ 1000000 | formatCurrency }}
+          </div>
+        </div>
+      </div>
+    </el-tab-pane>
     <el-tab-pane label="Thay đổi mật khẩu">
       <el-card class="box-card">
         <div slot="header" class="clearfix">
@@ -84,6 +112,7 @@
     <el-tab-pane label="Đăng xuất"></el-tab-pane>
   </el-tabs>
 </template>
+
 <script>
 export default {
   data() {
@@ -137,6 +166,8 @@ export default {
           },
         ],
       },
+
+      products: [],
     };
   },
   methods: {
@@ -159,6 +190,17 @@ export default {
         this.$store.dispatch("account/logout");
       }
     },
+  },
+
+  created() {
+    this.$store
+      .dispatch("common/getCartByUserId", {
+        userId: JSON.parse(localStorage.getItem("user")).id,
+      })
+      .then((data) => {
+        this.products = data;
+        console.log(this.products);
+      });
   },
 };
 </script>

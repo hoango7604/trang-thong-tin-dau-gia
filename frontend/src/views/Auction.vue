@@ -2,12 +2,27 @@
   <div>
     <SfBreadcrumbs :breadcrumbs="breadcrumbs" class="mb-4" />
     <div class="d-flex mb-4">
-      <SfCheckbox v-model="filter.rolex" name="Rolex" label="Rolex" />
-      <SfCheckbox v-model="filter.rolex" name="Rolex" label="Rolex" />
-      <SfCheckbox v-model="filter.rolex" name="Rolex" label="Rolex" />
+      <SfRadio
+        label="Giá < 2 triệu"
+        name="filter"
+        value="priceBefore2"
+        v-model="filter"
+      />
+      <SfRadio
+        label="Giá từ 2 - 5 triệu"
+        name="filter"
+        value="price2To5"
+        v-model="filter"
+      />
+      <SfRadio
+        label="Giá > 5 triệu"
+        name="filter"
+        value="priceAfter5"
+        v-model="filter"
+      />
     </div>
     <h2 class="text-center mb-4">Danh sách sản phẩm</h2>
-    <div class="row mb-4">
+    <div class="row mb-4" v-if="products.length">
       <ProductCard
         v-for="product in products"
         :key="product.id"
@@ -19,35 +34,101 @@
         :startPrice="product.startPrice"
       ></ProductCard>
     </div>
+    <div v-else class="row mb-4 text-center">Không có sản phẩm nào hợp lệ</div>
   </div>
 </template>
 
 <script>
-import { SfBreadcrumbs, SfCheckbox, SfProductCard } from "@storefront-ui/vue";
+import {
+  SfBreadcrumbs,
+  SfCheckbox,
+  SfProductCard,
+  SfSelect,
+  SfRadio,
+} from "@storefront-ui/vue";
 import ProductCard from "@/components/ProductCard";
 
 export default {
   components: {
     SfBreadcrumbs,
     SfCheckbox,
+    SfRadio,
     SfProductCard,
     ProductCard,
+    SfSelect,
   },
   data() {
     return {
+      options: [
+        { value: "before2", label: "Giá < 2 triệu" },
+        { value: "2To5", label: "Giá từ 2 - 5 triệu" },
+        { value: "after5", label: "Giá > 5 triệu" },
+      ],
       breadcrumbs: [
         { text: "Trang chủ", link: "/" },
         { text: "Đấu giá trực tuyến", link: "/" },
       ],
-      filter: {
-        rolex: false,
-      },
+      filter: "",
       auctions: [],
       currentAuctionId: null,
       categories: [],
       products: [],
       endDate: "",
     };
+  },
+
+  watch: {
+    async filter(value) {
+      let priceFrom = 0;
+      let priceTo = 0;
+      console.log(this.$route.params.id);
+
+      switch (value) {
+        case "priceBefore2":
+          await this.$axios
+            .get("Product/GetProductsByFilter", {
+              params: {
+                CategoryId: this.$route.params.id,
+                PrimaryPriceTo: 2000000,
+                MaxResultCount: 20,
+              },
+            })
+            .then((data) => {
+              const result = data.data.result;
+              this.products = result.items;
+            });
+          break;
+        case "price2To5":
+          await this.$axios
+            .get("Product/GetProductsByFilter", {
+              params: {
+                CategoryId: this.$route.params.id,
+                PrimaryPriceFrom: 2000000,
+                PrimaryPriceTo: 5000000,
+                MaxResultCount: 20,
+              },
+            })
+            .then((data) => {
+              const result = data.data.result;
+              this.products = result.items;
+            });
+          break;
+        case "priceAfter5":
+          await this.$axios
+            .get("Product/GetProductsByFilter", {
+              params: {
+                CategoryId: this.$route.params.id,
+                PrimaryPriceFrom: 5000000,
+                MaxResultCount: 20,
+              },
+            })
+            .then((data) => {
+              const result = data.data.result;
+              this.products = result.items;
+            });
+          break;
+      }
+    },
   },
 
   methods: {
@@ -108,5 +189,8 @@ export default {
 <style scoped>
 .sf-checkbox {
   margin-right: 16px;
+}
+.sf-radio--is-active {
+  background: transparent;
 }
 </style>
