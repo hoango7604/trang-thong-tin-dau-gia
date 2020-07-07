@@ -1,0 +1,104 @@
+<div
+    bsModal
+    #viewModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="viewModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>Thông tin sản phẩm:</span>
+                </h4>
+                <button
+                    type="button"
+                    class="close"
+                    (click)="close()"
+                    [attr.aria-label]="l('Close')"
+                >
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Tên sản phẩm</label>
+                    <p>{{ product.name }}</p>
+                </div>
+                <div class="form-group">
+                    <label>Mã sản phẩm</label>
+                    <p>{{ product.productId }}</p>
+                </div>
+                <div class="form-group">
+                    <label>URL ảnh</label>
+                    <p>{{ product.imageUrl }}</p>
+                </div>
+                <div class="form-group">
+                    <label>Danh mục sản phẩm</label>
+                    <p>{{ product.categoryId }}</p>
+                </div>
+                <div class="form-group">
+                    <label>Giá gốc</label>
+                    <p>{{ product.primaryPrice }}</p>
+                </div>
+                <div class="form-group">
+                    <label>Giá khởi điểm</label>
+                    <p>{{ product.startPrice }}</p>
+                </div>
+                <div class="form-group">
+                    <label>Giá hiện tại</label>
+                    <p>{{ product.currentPrice }}</p>
+                </div>
+                <div class="form-group">
+                    <label>Bước giá</label>
+                    <p>{{ product.stepPrice }}</p>
+                </div>
+                <div class="form-group">
+                    <label>Người chiến thắng</label>
+                    <p>{{ product.winnerClientId }}</p>
+                </div>
+                <div class="form-group">
+                    <label>Thương hiệu</label>
+                    <p>{{ product.brand }}</p>
+                </div>
+                <div class="form-group">
+                    <label>Bảo hành</label>
+                    <p>{{ product.warranty }}</p>
+                </div>
+                <div class="form-group">
+                    <label>Đường kính mặt</label>
+                    <p>{{ product.diameter }}</p>
+                </div>
+                <div class="form-group">
+                    <label>Năng lượng sử dụng</label>
+                    <p>{{ product.energySource }}</p>
+                </div>
+                <div class="form-group">
+                    <label>Chi tiết sản phẩm</label>
+                    <p>{{ product.detail }}</p>
+                </div>
+                <div class="form-group">
+                    <label>Phiên đấu giá</label>
+                    <p>{{ product.auctionId }}</p>
+                </div>
+                <div class="form-group">
+                    <label>Đã thanh toán</label>
+                    <p>{{ product.isPaid }}</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button
+                    [disabled]="saving"
+                    type="button"
+                    class="btn btn-default"
+                    (click)="close()"
+                >
+                    {{ l("Close") }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

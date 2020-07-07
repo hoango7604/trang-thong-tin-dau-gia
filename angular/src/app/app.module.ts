@@ -34,7 +34,6 @@ import { UserNotificationHelper } from './shared/layout/notifications/UserNotifi
 import { HeaderNotificationsComponent } from './shared/layout/notifications/header-notifications.component';
 import { NotificationSettingsModalComponent } from './shared/layout/notifications/notification-settings-modal.component';
 import { NotificationsComponent } from './shared/layout/notifications/notifications.component';
-
 @NgModule({
     declarations: [
         AppComponent,
@@ -54,7 +53,7 @@ import { NotificationsComponent } from './shared/layout/notifications/notificati
         ChatBarComponent,
         ChatFriendListItemComponent,
         NotificationSettingsModalComponent,
-        ChatMessageComponent
+        ChatMessageComponent,
     ],
     imports: [
         ngCommon.CommonModule,

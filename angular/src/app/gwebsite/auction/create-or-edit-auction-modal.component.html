@@ -13,13 +13,10 @@
             <form #editForm="ngForm" novalidate (ngSubmit)="save()">
                 <div class="modal-header">
                     <h4 class="modal-title">
-                        <span *ngIf="demoModel.id"
-                            >{{ l("EditDemoModel") }}:
-                            {{ demoModel.name }}</span
+                        <span *ngIf="auction.id"
+                            >Cập nhật phiên đấu giá: {{ auction.id }}</span
                         >
-                        <span *ngIf="!demoModel.id">{{
-                            l("CreateNewDemoModel")
-                        }}</span>
+                        <span *ngIf="!auction.id">Tạo mới phiên đấu giá</span>
                     </h4>
                     <button
                         type="button"
@@ -31,53 +28,40 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label>{{ l("DemoModelValue") }} *</label>
+                    <div class="form-group" *ngIf="auction.id">
+                        <label>Tên phiên đấu giá *</label>
                         <input
-                            #valueInput="ngModel"
                             class="form-control"
-                            type="number"
-                            min="0"
-                            name="Value"
-                            [(ngModel)]="demoModel.value"
+                            type="text"
+                            name="Name"
+                            [value]="genAuctionName(auction.id)"
+                            disabled
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label>Thời gian bắt đầu *</label>
+                        <input
+                            #startDateInput
+                            class="form-control"
+                            type="datetime"
+                            name="StartDate"
                             required
-                            maxlength="64"
                         />
                         <validation-messages
-                            [formCtrl]="valueInput"
+                            [formCtrl]="startDateInput"
                         ></validation-messages>
                     </div>
                     <div class="form-group">
-                        <label>{{ l("DemoModelInfo") }} *</label>
+                        <label>Thời gian kết thúc *</label>
                         <input
-                            #infoInput="ngModel"
+                            #endDateInput
                             class="form-control"
-                            type="text"
-                            name="Info"
-                            [(ngModel)]="demoModel.info"
+                            type="datetime"
+                            name="EndDate"
                             required
-                            maxlength="64"
                         />
                         <validation-messages
-                            [formCtrl]="infoInput"
-                        ></validation-messages>
-                    </div>
-                    <div class="form-group">
-                        <label for="dateInput"
-                            >{{ l("DemoModelDate") }} *</label
-                        >
-                        <input
-                            id="dateInput"
-                            #dateInput
-                            class="form-control"
-                            type="text"
-                            name="Date"
-                            [(ngModel)]="demoModel.date"
-                            required
-                            maxlength="64"
-                        />
-                        <validation-messages
-                            [formCtrl]="dateInput"
+                            [formCtrl]="endDateInput"
                         ></validation-messages>
                     </div>
                 </div>

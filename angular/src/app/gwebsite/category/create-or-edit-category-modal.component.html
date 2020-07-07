@@ -13,13 +13,10 @@
             <form #editForm="ngForm" novalidate (ngSubmit)="save()">
                 <div class="modal-header">
                     <h4 class="modal-title">
-                        <span *ngIf="demoModel.id"
-                            >{{ l("EditDemoModel") }}:
-                            {{ demoModel.name }}</span
+                        <span *ngIf="category.id"
+                            >Cập nhật danh mục: {{ category.name }}</span
                         >
-                        <span *ngIf="!demoModel.id">{{
-                            l("CreateNewDemoModel")
-                        }}</span>
+                        <span *ngIf="!category.id">Tạo mới danh mục</span>
                     </h4>
                     <button
                         type="button"
@@ -32,52 +29,18 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>{{ l("DemoModelValue") }} *</label>
+                        <label>Tên danh mục *</label>
                         <input
-                            #valueInput="ngModel"
-                            class="form-control"
-                            type="number"
-                            min="0"
-                            name="Value"
-                            [(ngModel)]="demoModel.value"
-                            required
-                            maxlength="64"
-                        />
-                        <validation-messages
-                            [formCtrl]="valueInput"
-                        ></validation-messages>
-                    </div>
-                    <div class="form-group">
-                        <label>{{ l("DemoModelInfo") }} *</label>
-                        <input
-                            #infoInput="ngModel"
+                            #nameInput="ngModel"
                             class="form-control"
                             type="text"
-                            name="Info"
-                            [(ngModel)]="demoModel.info"
+                            name="Name"
+                            [(ngModel)]="category.name"
                             required
                             maxlength="64"
                         />
                         <validation-messages
-                            [formCtrl]="infoInput"
-                        ></validation-messages>
-                    </div>
-                    <div class="form-group">
-                        <label for="dateInput"
-                            >{{ l("DemoModelDate") }} *</label
-                        >
-                        <input
-                            id="dateInput"
-                            #dateInput
-                            class="form-control"
-                            type="text"
-                            name="Date"
-                            [(ngModel)]="demoModel.date"
-                            required
-                            maxlength="64"
-                        />
-                        <validation-messages
-                            [formCtrl]="dateInput"
+                            [formCtrl]="nameInput"
                         ></validation-messages>
                     </div>
                 </div>
