@@ -48,7 +48,7 @@ export default {
         cur = this.$store.state.common.currentAuction;
       }
       this.curAunction = cur.id - 1;
-      this.endDate = cur.endDate;
+      this.endDate = "2020-06-07";
     },
 
     fetchProductsByCategory() {

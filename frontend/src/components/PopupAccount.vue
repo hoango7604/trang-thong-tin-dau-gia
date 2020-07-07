@@ -146,8 +146,8 @@ export default {
     close() {
       this.$emit("closePopUp");
     },
-    actionLogin() {
-      this.$store.dispatch("account/login", this.formLogin);
+    async actionLogin() {
+      await this.$store.dispatch("account/login", this.formLogin);
       if (!this.isErrorLogin) {
         location.reload();
       }

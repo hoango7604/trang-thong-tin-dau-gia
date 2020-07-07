@@ -11,7 +11,7 @@ import axios from "axios";
 
 Vue.config.productionTip = false;
 
-axios.defaults.baseURL = "http://localhost:5000/api/";
+axios.defaults.baseURL = "https://348ebe6d1dd3.ngrok.io/api/";
 
 Vue.prototype.$axios = axios;
 Vue.use(ElementUI);

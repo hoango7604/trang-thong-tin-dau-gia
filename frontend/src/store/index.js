@@ -8,7 +8,7 @@ import common from "./common.js";
 
 Vue.use(Vuex);
 
-axios.defaults.baseURL = "http://localhost:5000/api/";
+axios.defaults.baseURL = "https://348ebe6d1dd3.ngrok.io/api/";
 
 const debug = process.env.NODE_ENV !== "production";
 
