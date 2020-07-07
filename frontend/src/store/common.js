@@ -62,16 +62,19 @@ const actions = {
   },
 
   async finishPayment({ commit }, payload) {
-    // const res = await axios.get("Category/GetCategorysByFilter");
-    // const { result, success } = res.data;
-    // if (success) {
-    //   if (result.items.length > 0) {
-    //     commit("setCategory", result.items);
-    //     return result.items;
-    //   }
-    //   return null;
-    // }
-    // return null;
+    const res = await axios.post("Payment/CreateOrEditPayment", {
+      clientId: payload.userId,
+      productId: payload.productId,
+      price: payload.price,
+      address: payload.address,
+      id: 0,
+    });
+    console.log("finishPayment -> res", res);
+    const { result, success } = res.data;
+    if (success) {
+      return true;
+    }
+    return false;
   },
 
   async getInfoUserById({ commit }, payload) {

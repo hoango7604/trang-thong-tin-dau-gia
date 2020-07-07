@@ -11,6 +11,8 @@ const URL_PAYPAL =
 export default {
   props: {
     payment: { type: Object },
+    products: { type: Array, default: [] },
+    user: { type: Object, default: {} },
   },
 
   data() {
@@ -41,7 +43,7 @@ export default {
             size: "responsive",
             tagline: false,
           },
-          createOrder: (data, actions) => {
+          createOrder: async (data, actions) => {
             return actions.order.create({
               purchase_units: [
                 {
@@ -57,9 +59,18 @@ export default {
           onApprove: async (data, actions) => {
             const order = await actions.order.get();
             this.paidFor = true;
-            // Payment bang paypal thanh cong ne
-            // Call api payment
-            
+
+            if (this.products.length) {
+              for (const product of this.products) {
+                await this.$store.dispatch("common/finishPayment", {
+                  userId: this.user.id,
+                  address: this.user.address,
+                  productId: product.id,
+                  price: product.currentPrice,
+                });
+              }
+              await window.open("/", "_self");
+            }
           },
           onError: (err) => {
             console.log(err);

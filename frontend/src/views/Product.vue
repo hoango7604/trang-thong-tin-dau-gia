@@ -192,7 +192,10 @@ export default {
                 },
               })
               .then((data) => {
-                this.winner = data.data.result.fullName;
+                this.winner = "Chưa có";
+                if (data.data.result) {
+                  this.winner = data.data.result.fullName;
+                }
               });
 
             this.images = [
@@ -232,7 +235,7 @@ export default {
           console.log("fetchUsersAuctioning -> result", result);
           if (success) {
             // Get nguoi dung dang dau gia trong san pham
-            this.userAuctioning = null;
+            this.userAuctioning = [];
             const { items } = result;
             if (items) {
               // vi khong lay dc truc tiep thong tin user nen phai goi api get tung user theo id

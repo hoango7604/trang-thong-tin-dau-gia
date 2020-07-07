@@ -7,7 +7,7 @@
             <SfInput v-model="form.name" label="Họ và tên" />
             <SfInput v-model="form.phone" label="Số điện thoại" />
             <SfInput v-model="form.address" label="Địa chỉ" />
-            <Paypal :payment="payment" />
+            <Paypal :payment="payment" :products="products" :user="user" />
           </SfStep>
         </SfSteps>
       </div>
@@ -23,18 +23,18 @@
         <div
           v-else
           class="d-flex justify-content-start p-3"
-          v-for="index in 5"
+          v-for="(product, index) in products"
           :key="index"
         >
           <img
-            src="https://firebasestorage.googleapis.com/v0/b/newagent-kgryfg.appspot.com/o/dongho3_2.jpg?alt=media&token=b1ddf338-1058-46d4-9b43-2435fbdcb4ee"
+            :src="product.imageUrl"
             alt="#"
             width="110"
             class="img-fluid mb-4"
           />
           <div class="ml-3">
-            <h4 class="mb-4">Rolex 2</h4>
-            {{ 1000000 | formatCurrency }}
+            <h4 class="mb-4">{{ product.name }}</h4>
+            {{ product.currentPrice | formatCurrency }}
           </div>
         </div>
         <!-- <hr /> -->
@@ -83,6 +83,7 @@ export default {
         phone: "",
         address: "",
       },
+      totalPrice: 0,
       price: 1000000,
       active: 0,
       canGoBack: true,
@@ -94,8 +95,14 @@ export default {
     payment() {
       return {
         description: "Payment by paypal",
-        total: this.price,
+        total: this.totalPrice / 20000,
         currency: "USD",
+      };
+    },
+    user() {
+      return {
+        userId: JSON.parse(localStorage.getItem("user")).id,
+        address: this.form.address,
       };
     },
   },
@@ -106,8 +113,12 @@ export default {
         userId: this.$route.params.id,
       })
       .then((data) => {
-        this.products = data;
-        console.log(this.products);
+        this.products = data.filter((el) => !el.isPaid);
+        let totalPrice = 0;
+        this.products.forEach((el) => {
+          totalPrice += el.currentPrice;
+        });
+        this.totalPrice = totalPrice;
       });
   },
 };
