@@ -108,8 +108,7 @@ export default {
       isMobile: false,
       navigation: [
         { name: "Trang chủ", link: "/" },
-        { name: "Phiên đã đấu", link: "/account" },
-        { name: "Phiên vừa kết thúc", link: "/account" },
+        { name: "Phiên đã đấu", link: "/past-auction" },
       ],
       searchValue: "",
       title: "Storefront UI",
@@ -240,5 +239,8 @@ export default {
   min-height: 60vh;
   max-width: 1240px;
   margin: auto;
+}
+.el-dropdown {
+  display: flex !important;
 }
 </style>

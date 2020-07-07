@@ -45,7 +45,7 @@
           </div>
           <div class="mt-2">
             <SfInput
-              v-model="formRegister.name"
+              v-model="formRegister.fullName"
               type="text"
               label="Họ và tên"
               name="fullName"
